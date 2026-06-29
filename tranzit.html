@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TranZit — Tower of Babble Run Sheet</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600&family=Barlow:wght@400;500;600&display=swap');
+  :root{--fog:#c9cdc2;--night:#0b0f0c;--panel:#141a15;--panel2:#1b231c;--ash:#2a332a;--bone:#e6e8e0;--mute:#8a948a;--tox:#7cc242;--tox-dim:#4f7a2c;--ember:#d8762e;--blood:#9d2f2f;--blue:#3aa0c7;--gold:#d8a832;--mint:#5fcf9e;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Barlow',system-ui,sans-serif;background:radial-gradient(120% 80% at 50% -10%, rgba(124,194,66,.10), transparent 60%),radial-gradient(100% 60% at 50% 110%, rgba(216,118,46,.07), transparent 60%),var(--night);color:var(--bone);line-height:1.5;min-height:100vh;padding-bottom:90px;}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(60% 40% at 20% 30%, rgba(201,205,194,.05), transparent 70%),radial-gradient(50% 35% at 80% 60%, rgba(201,205,194,.04), transparent 70%);animation:drift 22s ease-in-out infinite alternate;}
+  @keyframes drift{from{transform:translateX(-3%) translateY(0)}to{transform:translateX(3%) translateY(-2%)}}
+  .wrap{position:relative;z-index:1;max-width:780px;margin:0 auto;padding:0 18px;}
+  header{padding:38px 0 22px;border-bottom:1px solid var(--ash);}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;letter-spacing:.32em;text-transform:uppercase;font-size:.72rem;color:var(--tox);font-weight:600;margin-bottom:10px;}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(2rem,7vw,3.2rem);line-height:.98;text-transform:uppercase;letter-spacing:.01em;}
+  h1 .sub{display:block;color:var(--ember);font-size:.5em;font-weight:600;letter-spacing:.08em;margin-top:6px;}
+  .meta{font-family:'Barlow Condensed',sans-serif;margin-top:16px;color:var(--mute);font-size:1.05rem;letter-spacing:.02em;display:flex;flex-wrap:wrap;gap:6px 14px;}
+  .meta b{color:var(--bone);font-weight:600;}
+  .warn{margin-top:18px;display:flex;gap:11px;align-items:flex-start;background:linear-gradient(180deg,rgba(157,47,47,.16),rgba(157,47,47,.06));border:1px solid rgba(157,47,47,.4);border-left:3px solid var(--blood);padding:12px 14px;border-radius:7px;font-size:.93rem;color:#e7cfcf;}
+  .progress-shell{position:sticky;top:0;z-index:5;margin:0 -18px 6px;padding:9px 18px 10px;background:rgba(11,15,12,.92);backdrop-filter:blur(9px);border-bottom:1px solid var(--ash);}
+  .progress-head{display:flex;align-items:center;gap:12px;margin-bottom:7px;}
+  .progress-head .label{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.2em;font-size:.7rem;color:var(--mute);flex-shrink:0;}
+  .progress-head .count{font-family:'Oswald',sans-serif;font-size:.98rem;color:var(--tox);font-weight:600;flex-shrink:0;}
+  .reset-mini{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;background:transparent;color:var(--mute);border:1px solid var(--ash);border-radius:6px;width:28px;height:26px;cursor:pointer;font-size:1rem;line-height:1;display:grid;place-items:center;transition:all .15s;padding:0;}
+  .reset-mini:hover{color:var(--blood);border-color:var(--blood);}
+  .reset-mini:active{transform:scale(.92);}
+  .bar{flex:1;height:6px;background:var(--ash);border-radius:20px;overflow:visible;position:relative;}
+  .bar-fill{height:100%;width:0;border-radius:20px;background:linear-gradient(90deg,var(--tox-dim),var(--tox));transition:width .4s cubic-bezier(.4,0,.2,1);}
+  .bar-fill.done{background:linear-gradient(90deg,var(--blue),#6fd0ee);box-shadow:0 0 14px rgba(58,160,199,.6);}
+  .pap-dots{position:absolute;inset:0;pointer-events:none;}
+  .pap-dot-m{position:absolute;top:50%;transform:translate(-50%,-50%);width:11px;height:11px;border-radius:50%;background:#0b0f0c;border:2px solid var(--blue);box-shadow:0 0 0 2px rgba(11,15,12,.9);transition:background .2s,box-shadow .2s;}
+  .pap-dot-m.on{background:var(--blue);box-shadow:0 0 8px rgba(58,160,199,.9),0 0 0 2px rgba(11,15,12,.9);}
+  .spendrow{display:flex;gap:7px 14px;margin-top:7px;font-family:'Barlow Condensed',sans-serif;font-size:.82rem;letter-spacing:.02em;white-space:nowrap;align-items:baseline;}
+  .spendrow .lab{color:var(--mute);text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;}
+  .spendrow .val{color:var(--ember);font-weight:600;font-family:'Oswald',sans-serif;font-size:.92rem;}
+  .spendrow .val.team{color:var(--fog);}
+  .trackrow{display:flex;align-items:baseline;gap:8px;margin-top:5px;font-family:'Barlow Condensed',sans-serif;white-space:nowrap;overflow:hidden;}
+  .trackrow .tk-lab{text-transform:uppercase;letter-spacing:.1em;font-size:.66rem;color:var(--mute);}
+  .trackrow .tk-val{font-family:'Oswald',sans-serif;font-size:.86rem;font-weight:600;color:var(--mute);}
+  .trackrow .tk-val.ahead{color:var(--tox);}
+  .trackrow .tk-val.tight{color:var(--gold);}
+  .trackrow .tk-val.behind{color:var(--ember);}
+  section{margin-top:26px;}
+  .sec-head{display:flex;align-items:center;gap:9px 13px;margin-bottom:13px;flex-wrap:wrap;}
+  .rnd{font-family:'Oswald',sans-serif;font-weight:700;font-size:.86rem;background:var(--ash);color:var(--fog);padding:5px 10px;border-radius:5px;letter-spacing:.05em;white-space:nowrap;border:1px solid #36433640;cursor:pointer;user-select:none;transition:background .15s,color .15s;}
+  .rnd:hover{border-color:var(--tox-dim);}
+  .sec-head h2{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:1.18rem;letter-spacing:.02em;color:var(--bone);}
+  .sec-head.core .rnd{background:linear-gradient(135deg,var(--ember),#b85d1e);color:#1a0f06;border:none;}
+  .sec-head.core h2{color:var(--ember);}
+  .rnd.rdone{background:var(--tox);color:var(--night);border-color:var(--tox);}
+  .rnd.rdone::after{content:" ✓";font-weight:700;}
+  .empty-note{font-family:'Barlow',sans-serif;font-size:.93rem;color:var(--mute);font-style:italic;background:var(--panel);border:1px dashed var(--ash);border-radius:9px;padding:11px 14px;}
+  .alert-tag{font-family:'Barlow Condensed',sans-serif;font-size:.74rem;font-weight:600;letter-spacing:.03em;color:#f0b4b4;background:linear-gradient(180deg,rgba(157,47,47,.28),rgba(157,47,47,.14));border:1px solid rgba(157,47,47,.55);border-radius:5px;padding:3px 9px;line-height:1.25;display:inline-flex;align-items:center;gap:5px;}
+  .alert-tag::before{content:"⚠";font-size:.82rem;}
+  .round-note{font-family:'Barlow',sans-serif;font-size:.9rem;color:var(--mute);font-style:italic;margin:-4px 0 10px;padding-left:2px;line-height:1.35;}
+  .round-note b{color:var(--fog);font-style:normal;font-weight:600;}
+  ul{list-style:none;display:flex;flex-direction:column;gap:7px;}
+  li.task{display:flex;gap:11px;align-items:flex-start;background:var(--panel);border:1px solid var(--ash);border-radius:9px;padding:13px 14px;cursor:pointer;transition:background .15s,border-color .15s,transform .08s;}
+  li.task:hover{background:var(--panel2);border-color:#3a463a;}
+  li.task:active{transform:scale(.992);}
+  .box{flex-shrink:0;width:22px;height:22px;border-radius:5px;margin-top:1px;border:2px solid var(--tox-dim);background:transparent;display:grid;place-items:center;transition:all .18s;}
+  .box svg{width:13px;height:13px;stroke:var(--night);stroke-width:3.5;fill:none;opacity:0;transform:scale(.4);transition:all .18s;}
+  .li-ic{flex-shrink:0;width:24px;height:24px;cursor:pointer;border-radius:6px;padding:2px;border:1px solid #2a332a;background:#0e140e;display:grid;place-items:center;transition:border-color .12s,transform .08s;}
+  .li-ic:hover{border-color:currentColor;}
+  .li-ic:active{transform:scale(.9);}
+  .li-ic svg{width:100%;height:100%;display:block;}
+  .rightcol{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:5px;margin-top:1px;}
+  .cat-pickup{color:var(--tox);}.cat-perk{color:var(--mint);}.cat-gun{color:var(--ember);}.cat-door{color:#9aa698;}
+  .cat-build{color:var(--ember);}.cat-power{color:var(--blue);}.cat-box{color:var(--gold);}.cat-pylon{color:var(--blue);}
+  .cat-emp{color:var(--ember);}.cat-lamp{color:var(--tox);}.cat-turbine{color:var(--tox);}
+  .tasktop{display:none;}
+  .txt{flex:1;font-size:1rem;color:var(--bone);}
+  .txt b{font-weight:600;color:#fff;}
+  .txt i{color:var(--mute);font-style:italic;}
+  .costbadge{flex-shrink:0;font-family:'Oswald',sans-serif;font-size:.82rem;font-weight:600;color:var(--ember);background:rgba(216,118,46,.12);border:1px solid rgba(216,118,46,.35);border-radius:5px;padding:2px 7px;white-space:nowrap;margin-top:1px;}
+  .costbadge.team{color:var(--fog);background:rgba(154,166,152,.1);border-color:rgba(154,166,152,.3);}
+  .costbadge.opt{color:var(--mute);background:transparent;border-color:var(--ash);}
+  li.task.checked{border-color:var(--tox-dim);background:rgba(79,122,44,.10);}
+  li.task.checked .box{background:var(--tox);border-color:var(--tox);}
+  li.task.checked .box svg{opacity:1;transform:scale(1);}
+  li.task.checked .txt{color:var(--mute);text-decoration:line-through;text-decoration-color:var(--tox-dim);}
+  li.task.checked .txt b{color:var(--mute);}
+  li.task.checked .li-ic{opacity:.5;}
+  li.task.checked .costbadge{opacity:.5;}
+  .thumbs{display:flex;flex-wrap:wrap;gap:12px;margin:4px 0 2px;}
+  .thumb{position:relative;cursor:pointer;border-radius:9px;overflow:hidden;border:1px solid var(--ash);background:var(--panel);transition:border-color .15s,transform .08s;}
+  .thumb.feature{width:100%;}
+  .thumb.small{width:150px;}
+  .thumb:hover{border-color:var(--tox-dim);}
+  .thumb:active{transform:scale(.99);}
+  .thumb .frame{width:100%;display:block;background:#0d130d;overflow:hidden;}
+  .thumb.feature .frame{height:210px;}
+  .thumb.small .frame{height:96px;}
+  .thumb .frame svg{width:100%;height:100%;object-fit:cover;display:block;}
+  .thumb .cap{font-family:'Barlow Condensed',sans-serif;font-size:.82rem;letter-spacing:.03em;color:var(--fog);padding:7px 10px;line-height:1.25;border-top:1px solid var(--ash);}
+  .thumb.feature .cap{font-size:.92rem;color:var(--bone);}
+  .thumb .zoomtag{position:absolute;top:6px;right:6px;background:rgba(11,15,12,.78);color:var(--tox);font-size:.62rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:4px;}
+  .card{background:var(--panel);border:1px solid var(--ash);border-radius:10px;padding:15px 16px;margin-top:8px;}
+  .card.roles li{margin-bottom:11px;}
+  .card.roles li:last-child{margin-bottom:0;}
+  .card.roles .who{font-family:'Oswald',sans-serif;font-weight:600;color:var(--tox);text-transform:uppercase;font-size:.92rem;letter-spacing:.03em;display:block;margin-bottom:2px;}
+  .card p{font-size:.97rem;color:var(--fog);}
+  .card p b{color:#fff;font-weight:600;}
+  .card p i{color:var(--mute);}
+  .ref-title{font-family:'Oswald',sans-serif;text-transform:uppercase;font-weight:600;font-size:1.05rem;letter-spacing:.03em;margin-bottom:7px;display:flex;align-items:center;gap:9px;}
+  .ref-title .dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
+  .divider{height:1px;background:var(--ash);margin:34px 0 8px;}
+  /* PaP tracker */
+  .pap{background:var(--panel);border:1px solid var(--ash);border-radius:10px;padding:13px 15px;margin-top:8px;}
+  .pap-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;}
+  .pap-head .t{font-family:'Oswald',sans-serif;text-transform:uppercase;font-size:.95rem;letter-spacing:.04em;color:var(--blue);}
+  .pap-head .n{font-family:'Oswald',sans-serif;font-size:.9rem;color:var(--mute);}
+  .pap-head .n.unlocked{color:var(--tox);}
+  .pap-steps{display:flex;gap:8px;}
+  .pap-step{flex:1;display:flex;flex-direction:column;gap:6px;align-items:center;text-align:center;}
+  .pap-dot{width:100%;height:6px;border-radius:20px;background:var(--ash);transition:background .2s;}
+  .pap-step.on .pap-dot{background:linear-gradient(90deg,var(--blue),#6fd0ee);}
+  .pap-step .pl{font-family:'Barlow Condensed',sans-serif;font-size:.74rem;color:var(--mute);letter-spacing:.02em;line-height:1.2;}
+  .pap-step.on .pl{color:var(--fog);}
+  /* money table */
+  .mtable{width:100%;border-collapse:collapse;margin-top:8px;font-family:'Barlow Condensed',sans-serif;font-size:.92rem;}
+  .mtable td{padding:4px 8px;border-bottom:1px solid #20281f;color:var(--fog);}
+  .mtable td.r{text-align:right;color:var(--ember);font-weight:600;}
+  .mtable td.lab{color:var(--mute);}
+  .est-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-top:10px;font-family:'Barlow Condensed',sans-serif;}
+  .est-cell{background:#0e140e;border:1px solid var(--ash);border-radius:6px;padding:6px 4px;text-align:center;}
+  .est-cell .rr{font-size:.68rem;color:var(--mute);letter-spacing:.06em;}
+  .est-cell .vv{font-size:.92rem;color:var(--tox);font-weight:600;font-family:'Oswald',sans-serif;}
+  footer{margin-top:30px;padding-top:18px;border-top:1px solid var(--ash);color:var(--mute);font-size:.85rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;align-items:center;}
+  .list-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:26px;padding-bottom:10px;border-bottom:1px solid var(--ash);}
+  .list-top-label{font-family:'Barlow Condensed',sans-serif;text-transform:uppercase;letter-spacing:.14em;font-size:.74rem;color:var(--mute);}
+  .reset{font-family:'Barlow Condensed',sans-serif;background:transparent;color:var(--mute);border:1px solid var(--ash);border-radius:6px;padding:7px 13px;cursor:pointer;letter-spacing:.1em;text-transform:uppercase;font-size:.74rem;transition:all .15s;}
+  .reset:hover{color:var(--blood);border-color:var(--blood);}
+  .victory{position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(140%);z-index:20;background:linear-gradient(135deg,var(--blue),#1d6e8c);color:#04141b;font-family:'Oswald',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.06em;padding:14px 26px;border-radius:10px;box-shadow:0 8px 40px rgba(58,160,199,.5);transition:transform .5s cubic-bezier(.2,.9,.3,1.3);font-size:1.05rem;white-space:nowrap;text-align:center;}
+  .victory.show{transform:translateX(-50%) translateY(0);}
+  .lb{position:fixed;inset:0;z-index:50;background:rgba(6,9,7,.94);display:none;flex-direction:column;}
+  .lb.open{display:flex;}
+  .lb-bar{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--ash);background:rgba(11,15,12,.7);flex-wrap:wrap;}
+  .lb-title{font-family:'Oswald',sans-serif;text-transform:uppercase;letter-spacing:.04em;font-size:1rem;color:var(--bone);flex:1;min-width:140px;}
+  .lb-btn{font-family:'Barlow Condensed',sans-serif;background:var(--panel);color:var(--bone);border:1px solid var(--ash);border-radius:6px;padding:7px 12px;cursor:pointer;font-size:.82rem;letter-spacing:.04em;transition:all .12s;}
+  .lb-btn:hover{border-color:var(--tox-dim);color:var(--tox);}
+  .lb-btn.close:hover{border-color:var(--blood);color:var(--blood);}
+  .lb-stagewrap{flex:1;overflow:hidden;position:relative;touch-action:none;cursor:grab;}
+  .lb-stagewrap:active{cursor:grabbing;}
+  .lb-stage{position:absolute;top:50%;left:50%;transform-origin:center center;will-change:transform;}
+  .lb-stage svg{display:block;max-width:none;width:900px;height:620px;}
+  .lb-hint{position:absolute;bottom:10px;left:50%;transform:translateX(-50%);font-family:'Barlow Condensed',sans-serif;font-size:.78rem;color:var(--mute);background:rgba(11,15,12,.7);padding:5px 12px;border-radius:6px;letter-spacing:.05em;pointer-events:none;}
+  svg .mbg{fill:#0d130d;}
+  svg .road{fill:none;stroke:#46503f;stroke-width:5;stroke-dasharray:3 9;stroke-linecap:round;}
+  svg .stop{fill:#1b231c;stroke:#3a463a;stroke-width:1.5;}
+  svg .stop.dim{opacity:.4;}
+  svg .stopname{fill:#e6e8e0;font-family:'Oswald',sans-serif;font-weight:600;font-size:14px;text-anchor:middle;}
+  svg .stopsub{fill:#8a948a;font-family:'Barlow Condensed',sans-serif;font-size:11px;text-anchor:middle;}
+  svg .pinlbl{font-family:'Barlow Condensed',sans-serif;font-size:12.5px;font-weight:500;}
+  svg .pinlbl.s{font-size:11px;}
+  svg .iclbl{font-family:'Barlow Condensed',sans-serif;font-size:10px;fill:#c9cdc2;text-anchor:middle;}
+  svg .arrow{fill:#5a6650;}
+  svg .legitem{font-family:'Barlow Condensed',sans-serif;font-size:12px;fill:#c9cdc2;}
+  svg .diagtitle{font-family:'Oswald',sans-serif;font-weight:700;font-size:17px;fill:#e6e8e0;text-transform:uppercase;}
+  @media (max-width:520px){.sec-head{flex-wrap:wrap;gap:9px;}.thumb.small{width:calc(50% - 6px);}.est-grid{grid-template-columns:repeat(3,1fr);}}
+</style>
+</head>
+<body>
+
+<svg style="display:none" xmlns="http://www.w3.org/2000/svg"><defs>
+  <symbol id="ic-turbine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/><line x1="12" y1="4" x2="12" y2="10"/><line x1="12" y1="14" x2="12" y2="20"/><line x1="4" y1="12" x2="10" y2="12"/><line x1="14" y1="12" x2="20" y2="12"/></symbol>
+  <symbol id="ic-door" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="3" width="12" height="18" rx="1"/><circle cx="14.5" cy="12" r="1" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="ic-perk" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M10 3h4v3l1 2v10a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2V8l1-2z"/><line x1="9" y1="12" x2="15" y2="12"/></symbol>
+  <symbol id="ic-gun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3 7h15v4h-4l-2 3H9v-3H3z"/><line x1="6" y1="11" x2="6" y2="15"/></symbol>
+  <symbol id="ic-part" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/></symbol>
+  <symbol id="ic-build" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M15 5a3.4 3.4 0 0 0-4.6 4.1L4 15.5 6.5 18l6.4-6.4A3.4 3.4 0 0 0 17 7l-2 2-2-2z"/></symbol>
+  <symbol id="ic-box" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="4" y="7" width="16" height="13" rx="1"/><path d="M4 7l8-3 8 3"/><text x="12" y="17.5" text-anchor="middle" font-size="9" fill="currentColor" stroke="none" font-family="Oswald" font-weight="700">?</text></symbol>
+  <symbol id="ic-pylon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3L7 20M12 3l5 17M8.5 9h7M7.7 13h8.6"/></symbol>
+  <symbol id="ic-emp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="3.6"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.2 5.2l2 2M16.8 16.8l2 2M18.8 5.2l-2 2M7.2 16.8l-2 2"/></symbol>
+  <symbol id="ic-lamp" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 6h6v3a3 3 0 0 1-6 0z"/><line x1="12" y1="9.5" x2="12" y2="20"/><line x1="9" y1="20" x2="15" y2="20"/></symbol>
+  <symbol id="ic-power" viewBox="0 0 24 24" fill="currentColor" stroke="none"><path d="M13 2L4 14h6l-1 8 9-12h-6z"/></symbol>
+</defs></svg>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Green Run · Richtofen Path · Xbox</div>
+    <h1>TranZit<span class="sub">Tower of Babble — Run Sheet</span></h1>
+    <div class="meta"><span><b>3 players</b></span><span>·</span><span>Finish Pylon by <b>Round 15</b></span><span>·</span><span>Fog gets brutal past 20</span></div>
+    <div class="warn"><span>⚠</span><span>All 3 players must be in the lobby from the <b>START</b> — progress only saves if you began the match together. No dropping and rejoining mid-run.</span></div>
+  </header>
+  <div class="progress-shell">
+    <div class="progress-head"><span class="label">Run</span><div class="bar"><div class="bar-fill" id="fill"></div><div class="pap-dots" id="papDots"></div></div><span class="count"><span id="done">0</span>/<span id="total">0</span></span></div>
+    <div class="spendrow">
+      <span><span class="lab">Target</span> <span class="val team" id="target">—</span></span>
+      <span><span class="lab">PP earned</span> <span class="val team" id="earned">—</span></span>
+      <span><span class="lab">PP spend</span> <span class="val" id="spent">0</span></span>
+      <span><span class="lab">Doors</span> <span class="val team" id="doorspent">0</span></span>
+    </div>
+    <div class="trackrow" id="trackrow">
+      <span class="tk-lab" id="tkLabel">On track?</span>
+      <span class="tk-val" id="tkVal">start checking items</span>
+    </div>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="rnd">Maps</span><h2>Full Run Map + Diagrams</h2></div>
+    <p style="color:var(--mute);font-size:.92rem;margin:-4px 0 10px;">The big map below plots every objective as an icon in the correct spot. Tap the <b>icon next to any checklist line</b> to jump the map straight to that item. Pinch / scroll to zoom, drag to pan.</p>
+    <div class="thumbs" id="thumbs"></div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="rnd">Pre-Game</span><h2>Role Assignments</h2></div>
+    <ul class="card roles">
+      <li><span class="who">Player A — Jet Gun Handler</span><p>Heats the Pylon, holds the Jet Gun, leads the explosive-kill step.</p></li>
+      <li><span class="who">Player B — "The Ears" (Stuhlinger)</span><p>Only character who hears Richtofen. Calls out every step confirmation. Keeps a zombie alive between steps.</p></li>
+      <li><span class="who">Player C — Floater / Reviver</span><p>Runs parts collection in parallel, handles crowd control and revives during steps.</p></li>
+    </ul>
+  </section>
+
+  <div class="list-top">
+    <span class="list-top-label">Checklist · read top to bottom</span>
+    <button class="reset" id="resetList">⟲ Reset</button>
+  </div>
+  <div id="rounds"></div>
+
+  <div class="divider"></div>
+
+  <section>
+    <div class="ref-title"><span class="dot" style="background:var(--gold)"></span>Money &amp; Budget</div>
+    <div class="card">
+      <p style="margin-bottom:6px"><b>Per-player essential budget</b> (the four perks + Pack-a-Punch one gun):</p>
+      <table class="mtable">
+        <tr><td class="lab">Quick Revive</td><td class="r">1,500</td><td class="lab">Speed Cola</td><td class="r">3,000</td></tr>
+        <tr><td class="lab">Jugger-Nog</td><td class="r">2,500</td><td class="lab">Double Tap II</td><td class="r">2,000</td></tr>
+        <tr><td class="lab">Pack-a-Punch (1 gun)</td><td class="r">5,000</td><td class="lab"><b style="color:#fff">Essential total</b></td><td class="r"><b>~14,000</b></td></tr>
+      </table>
+      <p style="margin-top:10px;font-size:.92rem;color:var(--fog)"><b>Other costs:</b> Mystery Box <b style="color:var(--ember)">950</b>/spin · M16 wall <b style="color:var(--ember)">1,200</b> (optional) · each point-door <b style="color:var(--fog)">750</b> (one player pays). Optional 5th/6th perks: Stamin-Up 2,000, Tombstone 2,000.</p>
+      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Rough income</b> — per-player cumulative points if you're playing well in a 3-player game. <i>Estimate only; reviving or setting up the EE earns less, so treat as a sanity check, not a guarantee.</i></p>
+      <div class="est-grid" id="estgrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="ref-title"><span class="dot" style="background:var(--ember)"></span>Best Gun: M16 → Skullcrusher</div>
+    <div class="card"><p>Cheap wall buy at the Bus Depot (no box gamble), and Pack-a-Punched it becomes a 3-round-burst beast with an underbarrel grenade launcher — those grenades double as Ray Gun backup for the explosive Pylon step. <i>Honorable mentions: MP5 → MP58 for fast training; keep the Ray Gun UN-upgraded — the ordinary Ray Gun counts as explosive for the kill step.</i></p></div>
+  </section>
+
+  <section>
+    <div class="ref-title"><span class="dot" style="background:var(--tox)"></span>Every-Round Habits</div>
+    <div class="card"><p>Train zombies in loops; don't fight them scattered &nbsp;·&nbsp; Bank-bonus early rounds: shoot zombies a few times before knifing for max points &nbsp;·&nbsp; Player B calls out every Richtofen voice cue &nbsp;·&nbsp; Player C revives and covers crowd control during steps. <b>No dog rounds / no guaranteed Max Ammo</b> in TranZit — refills come from random drops only.</p></div>
+  </section>
+
+  <footer><span>TranZit · Tower of Babble · 3-player Richtofen run sheet</span><button class="reset" id="reset">Reset checklist</button></footer>
+</div>
+<div class="victory" id="victory">☣ Pylon glows blue — achievement unlocked</div>
+
+<div class="lb" id="lb">
+  <div class="lb-bar">
+    <span class="lb-title" id="lbTitle">Map</span>
+    <button class="lb-btn" id="lbOut">−</button><button class="lb-btn" id="lbReset">Reset view</button><button class="lb-btn" id="lbIn">+</button>
+    <button class="lb-btn close" id="lbClose">✕ Close</button>
+  </div>
+  <div class="lb-stagewrap" id="lbWrap"><div class="lb-stage" id="lbStage"></div><div class="lb-hint">Scroll / pinch to zoom · drag to pan</div></div>
+</div>
+
+<div style="display:none">
+  <div id="src-master">
+  <svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+    <rect class="mbg" x="0" y="0" width="900" height="620"/>
+    <text class="diagtitle" x="28" y="36">Full Run — Every Objective</text>
+    <text class="legitem" x="28" y="55" style="fill:#8a948a">Bus loops: Depot &#8594; Diner &#8594; Farm &#8594; Power &#8594; Town &#8594; back to Depot</text>
+    <path class="road" d="M150,470 L150,165"/><path class="road" d="M165,150 L435,108"/><path class="road" d="M468,100 L735,250"/><path class="road" d="M752,285 L700,478"/><path class="road" d="M665,498 L185,486"/>
+    <polygon class="arrow" points="150,300 144,314 156,314"/><polygon class="arrow" points="300,128 286,126 292,138"/><polygon class="arrow" points="605,178 591,172 595,186"/><polygon class="arrow" points="726,382 736,370 740,384"/><polygon class="arrow" points="420,492 434,486 434,498"/>
+    <rect x="498" y="150" width="186" height="92" rx="8" fill="#10180f" stroke="#34402d" stroke-width="1.5"/>
+    <text class="pinlbl s" x="591" y="167" fill="#8a948a" text-anchor="middle">CORNFIELD MAZE</text>
+    <rect class="stop" x="95" y="470" width="130" height="40" rx="7"/><text class="stopname" x="160" y="494">BUS DEPOT</text>
+    <rect class="stop" x="100" y="120" width="110" height="38" rx="7"/><text class="stopname" x="155" y="143">DINER</text>
+    <rect class="stop" x="392" y="80" width="104" height="38" rx="7"/><text class="stopname" x="444" y="103">FARM</text>
+    <rect class="stop" x="700" y="246" width="150" height="40" rx="7"/><text class="stopname" x="775" y="270">POWER STATION</text>
+    <rect class="stop" x="612" y="486" width="150" height="40" rx="7"/><text class="stopname" x="687" y="510">TOWN</text>
+    <g style="color:#7cc242"><use href="#ic-turbine" x="99" y="431" width="18" height="18"/></g><text class="iclbl" x="108" y="461">Turbine</text>
+    <g style="color:#9aa698"><use href="#ic-door" x="149" y="431" width="18" height="18"/></g><text class="iclbl" x="158" y="461">Door 750</text>
+    <g style="color:#d8762e"><use href="#ic-gun" x="196" y="431" width="18" height="18"/></g><text class="iclbl" x="205" y="461">M16</text>
+    <g style="color:#5fcf9e"><use href="#ic-perk" x="64" y="442" width="16" height="16"/></g><text class="iclbl" x="72" y="470">Revive</text>
+    <g style="color:#7cc242"><use href="#ic-lamp" x="231" y="487" width="18" height="18"/></g><text class="iclbl" x="240" y="517">Lamp</text>
+    <g style="color:#7cc242"><use href="#ic-lamp" x="149" y="91" width="18" height="18"/></g><text class="iclbl" x="158" y="87">Lamp</text>
+    <g style="color:#d8a832"><use href="#ic-box" x="233" y="125" width="18" height="18"/></g><text class="iclbl" x="242" y="155">Box</text>
+    <g style="color:#5fcf9e"><use href="#ic-perk" x="233" y="98" width="16" height="16"/></g><text class="iclbl" x="241" y="95">Speed</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="141" y="297" width="18" height="18"/></g><text class="pinlbl s" x="166" y="311" fill="#c9cdc2">Jet Engine (Tunnel)</text>
+    <g style="color:#5fcf9e"><use href="#ic-perk" x="436" y="62" width="16" height="16"/></g><text class="iclbl" x="444" y="58">Double Tap</text>
+    <g style="color:#3aa0c7"><use href="#ic-pylon" x="509" y="181" width="18" height="18"/></g><text class="pinlbl s" x="531" y="194" fill="#3aa0c7">Pylon — EE Tower (left)</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="509" y="208" width="18" height="18"/></g><text class="pinlbl s" x="531" y="221" fill="#c9cdc2">Handbrake — Nacht (right)</text>
+    <g style="color:#9aa698"><use href="#ic-door" x="671" y="217" width="18" height="18"/></g><text class="iclbl" x="680" y="212">Door</text>
+    <g style="color:#3aa0c7"><use href="#ic-power" x="703" y="217" width="18" height="18"/></g><text class="iclbl" x="712" y="212">Power</text>
+    <g style="color:#5fcf9e"><use href="#ic-perk" x="733" y="217" width="16" height="16"/></g><text class="iclbl" x="741" y="212">Tomb</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="651" y="296" width="18" height="18"/></g><text class="pinlbl s" x="646" y="310" fill="#c9cdc2" text-anchor="end">Wires (catwalk)</text>
+    <g style="color:#3aa0c7"><use href="#ic-power" x="855" y="251" width="18" height="18"/></g><text class="iclbl" x="864" y="281">PaP panel</text>
+    <g style="color:#7cc242"><use href="#ic-lamp" x="855" y="217" width="18" height="18"/></g><text class="iclbl" x="864" y="212">Lamp</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="711" y="363" width="18" height="18"/></g><text class="pinlbl s" x="706" y="377" fill="#c9cdc2" text-anchor="end">Pressure Gauge (Cabin)</text>
+    <g style="color:#9aa698"><use href="#ic-door" x="587" y="443" width="18" height="18"/></g><text class="iclbl" x="596" y="473">Jugg door</text>
+    <g style="color:#5fcf9e"><use href="#ic-perk" x="617" y="429" width="18" height="18"/></g><text class="iclbl" x="626" y="425">Jugg</text>
+    <g style="color:#9aa698"><use href="#ic-door" x="647" y="443" width="18" height="18"/></g><text class="iclbl" x="656" y="473">Bar door</text>
+    <g style="color:#d8762e"><use href="#ic-build" x="679" y="429" width="18" height="18"/></g><text class="iclbl" x="688" y="425">Bench</text>
+    <g style="color:#d8762e"><use href="#ic-build" x="713" y="443" width="18" height="18"/></g><text class="iclbl" x="722" y="473">Bank/PaP</text>
+    <g style="color:#7cc242"><use href="#ic-lamp" x="766" y="459" width="18" height="18"/></g><text class="iclbl" x="775" y="455">Lamp</text>
+    <text class="legitem" x="28" y="600" style="fill:#8a948a">PaP: place a Turbine on the lightning panel at Power, then race to the Town bank, grenade the 2 vault doors, and build.</text>
+  </svg>
+  </div>
+  <div id="src-jetgun">
+  <svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+    <rect class="mbg" x="0" y="0" width="900" height="620"/>
+    <text class="diagtitle" x="28" y="40">Jet Gun &#8212; 4 Parts</text>
+    <text class="legitem" x="28" y="60" style="fill:#8a948a">Carry one part at a time &#183; build at the TOWN BAR bench</text>
+    <path class="road" d="M150,470 L150,165"/><path class="road" d="M165,150 L435,108"/><path class="road" d="M468,100 L735,250"/><path class="road" d="M752,285 L700,478"/><path class="road" d="M665,498 L185,486"/>
+    <rect class="stop dim" x="95" y="470" width="130" height="40" rx="7"/><text class="stopname" x="160" y="494" opacity="0.55">BUS DEPOT</text>
+    <rect class="stop dim" x="95" y="120" width="120" height="40" rx="7"/><text class="stopname" x="155" y="144" opacity="0.55">DINER</text>
+    <rect class="stop dim" x="390" y="78" width="110" height="40" rx="7"/><text class="stopname" x="445" y="102" opacity="0.55">FARM</text>
+    <rect class="stop dim" x="700" y="238" width="150" height="46" rx="7"/><text class="stopname" x="775" y="265" opacity="0.55">POWER STATION</text>
+    <rect class="stop" x="610" y="478" width="150" height="46" rx="7" stroke="#d8762e" stroke-width="2"/><text class="stopname" x="685" y="498">TOWN &#8212; BAR</text><text class="stopsub" x="685" y="513" style="fill:#d8762e">&#9733; Build bench here</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="138" y="298" width="22" height="22"/></g><circle cx="150" cy="335" r="9" fill="#7cc242"/><text x="150" y="339" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="11" fill="#0b0f0c">1</text><text class="pinlbl" x="172" y="306" fill="#7cc242">Jet Engine</text><text class="pinlbl s" x="172" y="320" fill="#c9cdc2">Tunnel (Depot&#8596;Diner), by barriers</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="678" y="288" width="22" height="22"/></g><circle cx="690" cy="325" r="9" fill="#7cc242"/><text x="690" y="329" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="11" fill="#0b0f0c">2</text><text class="pinlbl" x="668" y="298" fill="#7cc242" text-anchor="end">Wires</text><text class="pinlbl s" x="668" y="312" fill="#c9cdc2" text-anchor="end">Power Station, ledge by catwalk (Tombstone)</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="533" y="184" width="22" height="22"/></g><circle cx="545" cy="221" r="9" fill="#7cc242"/><text x="545" y="225" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="11" fill="#0b0f0c">3</text><text class="pinlbl" x="567" y="193" fill="#7cc242">Handbrake</text><text class="pinlbl s" x="567" y="207" fill="#c9cdc2">Nacht der Untoten — cornfield RIGHT from Farm</text>
+    <g style="color:#7cc242"><use href="#ic-part" x="718" y="368" width="22" height="22"/></g><circle cx="730" cy="405" r="9" fill="#7cc242"/><text x="730" y="409" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="11" fill="#0b0f0c">4</text><text class="pinlbl" x="708" y="378" fill="#7cc242" text-anchor="end">Pressure Gauge</text><text class="pinlbl s" x="708" y="392" fill="#c9cdc2" text-anchor="end">Hunter's Cabin (fog, RIGHT from Power)</text>
+    <text class="legitem" x="28" y="588" style="fill:#8a948a">Make a crawler before each fog trip. Lava returns a part to spawn; the bus destroys it for good.</text>
+  </svg>
+  </div>
+  <div id="src-ending">
+  <svg viewBox="0 0 900 620" xmlns="http://www.w3.org/2000/svg">
+    <rect class="mbg" x="0" y="0" width="900" height="620"/>
+    <text class="diagtitle" x="28" y="40">Richtofen Ending &#8212; EMP 4 Green Lamps</text>
+    <text class="legitem" x="28" y="60" style="fill:#8a948a">After heating the Pylon &amp; the explosive-kill step: throw an EMP at each of the 4 green lamp posts.</text>
+    <g transform="translate(450,300)"><polygon points="0,-58 22,40 -22,40" fill="none" stroke="#3aa0c7" stroke-width="3"/><line x1="-16" y1="8" x2="16" y2="8" stroke="#3aa0c7" stroke-width="2.5"/><line x1="-19" y1="24" x2="19" y2="24" stroke="#3aa0c7" stroke-width="2.5"/><circle cx="0" cy="-58" r="6" fill="#3aa0c7"/><text x="0" y="64" text-anchor="middle" font-family="Oswald" font-weight="700" font-size="15" fill="#3aa0c7">PYLON</text><text x="0" y="80" text-anchor="middle" font-family="Barlow Condensed" font-size="12" fill="#c9cdc2">glows BLUE when done</text></g>
+    <g transform="translate(150,470)" style="color:#7cc242"><use href="#ic-lamp" x="-11" y="-11" width="22" height="22"/><text x="0" y="30" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#e6e8e0">BUS DEPOT</text></g>
+    <g transform="translate(160,130)" style="color:#7cc242"><use href="#ic-lamp" x="-11" y="-11" width="22" height="22"/><text x="0" y="30" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#e6e8e0">DINER</text></g>
+    <g transform="translate(760,140)" style="color:#7cc242"><use href="#ic-lamp" x="-11" y="-11" width="22" height="22"/><text x="0" y="30" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#e6e8e0">POWER</text></g>
+    <g transform="translate(750,470)" style="color:#7cc242"><use href="#ic-lamp" x="-11" y="-11" width="22" height="22"/><text x="0" y="30" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#e6e8e0">TOWN</text></g>
+    <line x1="180" y1="450" x2="420" y2="320" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/><line x1="190" y1="150" x2="425" y2="278" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/><line x1="730" y1="160" x2="478" y2="278" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/><line x1="720" y1="450" x2="480" y2="320" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/>
+    <rect x="300" y="392" width="300" height="74" rx="9" fill="#10180f" stroke="#34402d" stroke-width="1.5"/><text x="450" y="414" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#d8762e">3-PLAYER METHOD</text><text x="450" y="433" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">Each player covers a lamp. For the 4th:</text><text x="450" y="449" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">EMP your lamp, run a Denizen onto a lamp to</text><text x="450" y="463" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">make a teleporter, hop through, EMP the next.</text>
+    <text class="legitem" x="28" y="588" style="fill:#8a948a">No Avogadro kill and no turbines here &#8212; that's the Maxis path. Richtofen = Jet Gun + explosives + EMP the lamps.</text>
+  </svg>
+  </div>
+</div>
+
+<script>
+const ROUNDS=[
+ {r:"Round 1",t:"Bus Depot — Setup",core:false,note:"Knife only for the first couple rounds to bank max points before guns get weak.",tasks:[
+   {t:"Build the <b>Turbine</b> in the spawn room (mannequin, tail, fan)",ic:"turbine",cat:"turbine",x:108,y:440},
+   {t:"Buy the <b>M16</b> off the wall (faces you as you exit) — optional",ic:"gun",cat:"gun",x:205,y:440,cost:1200,ct:"player",opt:true},
+   {t:"Open the Bus Depot exit door — last, then board the bus",ic:"door",cat:"door",x:158,y:440,cost:750,ct:"team"}]},
+ {r:"Round 2",t:"Tunnel",core:false,note:"Shoot zombies a few times then knife for the point bonus while you still can.",tasks:[
+   {t:"Hop off in the Tunnel; grab the <b>Jet Engine</b> (Jet Gun part 1)",ic:"part",cat:"pickup",x:150,y:306}]},
+ {r:"Round 3",t:"Diner",core:false,tasks:[
+   {t:"Hit the <b>Mystery Box</b> at the Diner for a starter weapon (per spin)",ic:"box",cat:"box",x:242,y:134,cost:950,ct:"player"}]},
+ {r:"Round 4",t:"Travel",core:false,note:"Open round — ride the bus toward Power, train zombies in a loop, bank points. Nothing required.",tasks:[]},
+ {r:"Round 5",t:"Power Station — Switch",core:false,alert:"Turning power ON releases the Avogadro for the rest of the game",tasks:[
+   {t:"Open the Power shed door — and drop inside",ic:"door",cat:"door",x:680,y:226,cost:750,ct:"team"},
+   {t:"Build the power switch (hand, circuit box, lever)",ic:"power",cat:"power",x:712,y:226},
+   {t:"<b>Turn the power ON</b> (Avogadro spawns; Richtofen talks to Stuhlinger)",ic:"power",cat:"power",x:712,y:226}]},
+ {r:"Round 6",t:"Jugger-Nog — Priority",core:false,note:"Jugg is the #1 buy once power's on — go straight for it before the fog runs. Survivability beats everything else here.",tasks:[
+   {t:"Open the burning building's upper door (Town)",ic:"door",cat:"door",x:596,y:452,cost:750,ct:"team"},
+   {t:"<b>Buy Jugger-Nog</b> (all 3 players, top priority)",ic:"perk",cat:"perk",x:626,y:438,cost:2500,ct:"player"},
+   {t:"Grab the <b>Wires</b> (Jet Gun part 2) on the Power lower catwalk ledge",ic:"part",cat:"pickup",x:660,y:305},
+   {t:"<b>Buy Quick Revive</b> — Bus Depot (far end of spawn hallway) · faster revives",ic:"perk",cat:"perk",x:72,y:450,cost:1500,ct:"player"}]},
+ {r:"Round 7",t:"Fog — Nacht",core:false,alert:"Fog + Denizens — keep moving, don't stop in the open",note:"Denizens latch on in the fog; melee them off fast or you'll get pulled down.",tasks:[
+   {t:"<b>Make a crawler</b> before heading into the fog (so you're not rushed)"},
+   {t:"Grab the <b>Handbrake</b> (part 3) at Nacht der Untoten — cornfield, right from Farm",ic:"part",cat:"pickup",x:518,y:217},
+   {t:"<b>Buy Double Tap Root Beer II</b> — Farm (upper floor of barn) · +33% bullet damage",ic:"perk",cat:"perk",x:444,y:70,cost:2000,ct:"player"},
+   {t:"<b>Buy Speed Cola</b> — Diner · faster reloads & barrier rebuilds",ic:"perk",cat:"perk",x:241,y:106,cost:3000,ct:"player"}]},
+ {r:"Round 8",t:"Fog — Cabin",core:false,alert:"Fog + Denizens",tasks:[
+   {t:"Grab the <b>Pressure Gauge</b> (part 4) at Hunter's Cabin — fog, right from Power",ic:"part",cat:"pickup",x:720,y:372}]},
+ {r:"Round 9",t:"Town — Jet Gun",core:false,tasks:[
+   {t:"Open the Bar door (Jet Gun bench + Stamin-Up inside)",ic:"door",cat:"door",x:656,y:452,cost:750,ct:"team"},
+   {t:"Build the <b>Jet Gun</b> at the Bar bench (all 4 parts)",ic:"build",cat:"build",x:688,y:438},
+   {t:"<i>Optional 5th perk:</i> <b>Stamin-Up</b> — Town bar · only via the Tombstone-swap",ic:"perk",cat:"perk",x:700,y:445,cost:2000,ct:"player",opt:true},
+   {t:"<i>Optional 6th perk:</i> <b>Tombstone</b> — Power · co-op only; enables the perk-swap",ic:"perk",cat:"perk",x:741,y:225,cost:2000,ct:"player",opt:true}]},
+ {r:"Round 10",t:"Pack-a-Punch — Open",core:false,note:"Turbine on the Power panel stays active only briefly — race to the bank right after placing it.",tasks:[
+   {t:"Place a <b>Turbine</b> on the lightning panel at the Power Station",ic:"power",cat:"power",x:864,y:260,pap:1},
+   {t:"Race to Town; <b>grenade the two bank vault doors</b>",ic:"door",cat:"door",x:722,y:452,pap:2}]},
+ {r:"Round 11",t:"Pack-a-Punch — Build",core:false,tasks:[
+   {t:"Build the <b>Pack-a-Punch</b> from the 3 corridor parts (under the bank)",ic:"build",cat:"build",x:722,y:452,pap:3},
+   {t:"Pack-a-Punch the M16 → <b>Skullcrusher</b>",ic:"gun",cat:"gun",x:722,y:452,cost:5000,ct:"player"},
+   {t:"<i>Rough budget:</i> a box gun to PaP costs ~<b>950 spin + 5000</b> — keep a buffer if you didn't take the M16",ic:"gun",cat:"gun",x:722,y:452,cost:5950,ct:"player",opt:true}]},
+ {r:"Round 12",t:"Mystery Box — Ray Gun & EMP",core:false,note:"Or grab EMPs early from the bank in round 1 if you banked points — lets you finish sooner.",tasks:[
+   {t:"Box-spin for the <b>Ray Gun</b> (ordinary, NOT Mark II — counts as explosive)",ic:"gun",cat:"gun",x:242,y:134,cost:950,ct:"player"},
+   {t:"Box-spin for <b>EMP Grenades</b> (enough across the team for 4 lamps)",ic:"emp",cat:"emp",x:242,y:134,cost:950,ct:"player"}]},
+ {r:"Round 13",t:"Pylon — Heat It",core:true,alert:"Avogadro will harass the steps — EMP it, don't waste the step",note:"Player B (Stuhlinger) must call out each Richtofen voice line so you know a step registered.",tasks:[
+   {t:"<b>Make a crawler</b> before starting — keeps the horde off you during the steps"},
+   {t:"Watch for the <b>Avogadro</b> (electric zombie) — no Max Ammo on death, EMP it if it crowds you",ic:"emp",cat:"emp",x:242,y:134},
+   {t:"Take the Jet Gun under the <b>Pylon</b> and <b>blast until it breaks</b> → Richtofen confirms",ic:"pylon",cat:"pylon",x:518,y:190}]},
+ {r:"Round 14",t:"Pylon — Explosive Kills",core:true,tasks:[
+   {t:"Get <b>~25 explosive kills under the Pylon</b> (Ray Gun) until Richtofen says power's too high",ic:"pylon",cat:"pylon",x:518,y:190}]},
+ {r:"Round 15",t:"Pylon — EMP the Lamps",core:true,note:"All 4 EMPs need to land close together — coordinate on comms before throwing.",tasks:[
+   {t:"<b>EMP all 4 green lamps</b> — Depot, Diner, Town, Power (4th via the Denizen-teleporter trick)",ic:"lamp",cat:"lamp",x:450,y:300,z:1.05},
+   {t:"☣ <b>Pylon glows blue — achievement unlocks</b>",ic:"pylon",cat:"pylon",x:518,y:190}]},
+];
+const INCOME=[1000,2000,3200,4500,6000,7500,9000,10500,12000,14000,16000,18000,20000,22000,24000,26000];
+const DIAGRAMS=[
+ {id:"master",title:"Full Run Map",cap:"Every objective plotted in its correct spot",src:"src-master",feature:true},
+ {id:"jetgun",title:"Jet Gun — 4 Parts",cap:"Where each part spawns",src:"src-jetgun"},
+ {id:"ending",title:"Richtofen Ending",cap:"EMP the 4 green lamps",src:"src-ending"},
+];
+const MASTER=DIAGRAMS[0];
+const STORE_KEY="tranzit_tob_v5";
+let state={};
+try{state=JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){state={};}
+function fmt(n){return n.toLocaleString();}
+function fmtk(n){if(n>=1000){const v=n/1000;return (Math.round(v*10)/10)+'k';}return ''+n;}
+const thumbsEl=document.getElementById('thumbs');
+function svgMarkup(s){return document.getElementById(s).innerHTML;}
+function renderThumbs(){thumbsEl.innerHTML='';DIAGRAMS.forEach(d=>{const t=document.createElement('div');t.className='thumb '+(d.feature?'feature':'small');t.innerHTML=`<span class="frame">${svgMarkup(d.src)}</span><span class="zoomtag">zoom</span><span class="cap">${d.cap}</span>`;t.addEventListener('click',()=>openLB(d));thumbsEl.appendChild(t);});}
+// income estimate grid
+const estgrid=document.getElementById('estgrid');
+INCOME.forEach((v,i)=>{const c=document.createElement('div');c.className='est-cell';c.innerHTML=`<div class="rr">R${i+1}</div><div class="vv">${(v/1000)}k</div>`;estgrid.appendChild(c);});
+const lb=document.getElementById('lb'),lbStage=document.getElementById('lbStage'),lbWrap=document.getElementById('lbWrap'),lbTitle=document.getElementById('lbTitle');
+let cur=null,scale=1,tx=0,ty=0;
+function applyT(){lbStage.style.transform=`translate(-50%,-50%) translate(${tx}px,${ty}px) scale(${scale})`;}
+function focusOn(x,y,z){scale=z||1.9;tx=-(x-450)*scale;ty=-(y-310)*scale;applyT();}
+function setStage(d){lbStage.innerHTML=svgMarkup(d.src);}
+function openLB(d,focus){cur=d;lbTitle.textContent=d.title;setStage(d);if(focus){focusOn(focus.x,focus.y,focus.z);}else{scale=1;tx=0;ty=0;applyT();}lb.classList.add('open');}
+function closeLB(){lb.classList.remove('open');cur=null;}
+document.getElementById('lbClose').addEventListener('click',closeLB);
+document.getElementById('lbIn').addEventListener('click',()=>{scale=Math.min(8,scale*1.3);applyT();});
+document.getElementById('lbOut').addEventListener('click',()=>{scale=Math.max(.4,scale/1.3);applyT();});
+document.getElementById('lbReset').addEventListener('click',()=>{scale=1;tx=0;ty=0;applyT();});
+lb.addEventListener('click',e=>{if(e.target===lb)closeLB();});
+lbWrap.addEventListener('wheel',e=>{e.preventDefault();const f=e.deltaY<0?1.12:1/1.12;scale=Math.max(.4,Math.min(8,scale*f));applyT();},{passive:false});
+let pts=new Map(),lastDist=0,dragging=false,lastX=0,lastY=0;
+lbWrap.addEventListener('pointerdown',e=>{lbWrap.setPointerCapture(e.pointerId);pts.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pts.size===1){dragging=true;lastX=e.clientX;lastY=e.clientY;}});
+lbWrap.addEventListener('pointermove',e=>{if(!pts.has(e.pointerId))return;pts.set(e.pointerId,{x:e.clientX,y:e.clientY});if(pts.size===2){const a=[...pts.values()];const dist=Math.hypot(a[0].x-a[1].x,a[0].y-a[1].y);if(lastDist){const f=dist/lastDist;scale=Math.max(.4,Math.min(8,scale*f));applyT();}lastDist=dist;dragging=false;}else if(dragging){tx+=e.clientX-lastX;ty+=e.clientY-lastY;lastX=e.clientX;lastY=e.clientY;applyT();}});
+function endPt(e){pts.delete(e.pointerId);if(pts.size<2)lastDist=0;if(pts.size===0)dragging=false;}
+lbWrap.addEventListener('pointerup',endPt);lbWrap.addEventListener('pointercancel',endPt);
+window.addEventListener('keydown',e=>{if(e.key==='Escape'&&lb.classList.contains('open'))closeLB();});
+
+const allItems=[];let idx=0;const roundChips=[];const papItems={};const itemRound={};
+function makeRow(obj,id){const li=document.createElement('li');li.className='task'+(state[id]?' checked':'');let rightHTML='';const iconHTML=obj.ic?`<span class="li-ic cat-${obj.cat}" data-x="${obj.x}" data-y="${obj.y}" data-z="${obj.z||1.9}" title="Show on map"><svg viewBox="0 0 24 24"><use href="#ic-${obj.ic}"/></svg></span>`:'';let badge='';if(obj.cost){const cls=obj.ct==='team'?'team':(obj.opt?'opt':'');badge=`<span class="costbadge ${cls}">${fmt(obj.cost)}</span>`;}if(iconHTML||badge){rightHTML=`<span class="rightcol">${iconHTML}${badge}</span>`;}li.innerHTML=`<span class="box"><svg viewBox="0 0 16 16"><polyline points="2.5,8.5 6.5,12.5 13.5,3.5"/></svg></span><span class="txt">${obj.t}</span>${rightHTML}`;li.addEventListener('click',()=>toggle(id,li));const ico=li.querySelector('.li-ic');if(ico){ico.addEventListener('click',e=>{e.stopPropagation();openLB(MASTER,{x:+ico.dataset.x,y:+ico.dataset.y,z:+ico.dataset.z});});}return li;}
+
+const roundsEl=document.getElementById('rounds');const cumThroughRound=[0];
+ROUNDS.forEach((group,ri)=>{
+  let rc=0;(group.tasks||[]).forEach(t=>{if(typeof t==='object'&&t.cost&&t.ct==='player'&&!t.opt)rc+=t.cost;});cumThroughRound[ri+1]=cumThroughRound[ri]+rc;
+  const sec=document.createElement('section');const head=document.createElement('div');head.className='sec-head'+(group.core?' core':'');const chip=document.createElement('span');chip.className='rnd';chip.textContent=group.r;const rkey='r'+ri;chip.classList.toggle('rdone',!!state[rkey]);chip.title='Tap to mark this round done/undone';chip.addEventListener('click',()=>{state[rkey]=!state[rkey];localStorage.setItem(STORE_KEY,JSON.stringify(state));chip.classList.toggle('rdone',!!state[rkey]);});head.appendChild(chip);const h2=document.createElement('h2');h2.textContent=group.t;head.appendChild(h2);if(group.alert){const al=document.createElement('span');al.className='alert-tag';al.textContent=group.alert;head.appendChild(al);}sec.appendChild(head);
+  if(group.note){const nt=document.createElement('div');nt.className='round-note';nt.innerHTML='› '+group.note;sec.appendChild(nt);}
+  const rids=[];if(!group.tasks||group.tasks.length===0){if(!group.note){const note=document.createElement('div');note.className='empty-note';note.textContent="No required objective this round.";sec.appendChild(note);}}else{const ul=document.createElement('ul');group.tasks.forEach(task=>{const obj=typeof task==='string'?{t:task}:task;const id='i'+(idx++);allItems.push({id,obj});rids.push(id);itemRound[id]=ri+1;if(obj.pap)papItems[obj.pap]=id;ul.appendChild(makeRow(obj,id));});sec.appendChild(ul);}roundChips.push({chip,ids:rids,rkey});roundsEl.appendChild(sec);});
+
+const doneEl=document.getElementById('done'),totalEl=document.getElementById('total'),fill=document.getElementById('fill'),victory=document.getElementById('victory');
+const spentEl=document.getElementById('spent'),doorEl=document.getElementById('doorspent');
+const papDotsEl=document.getElementById('papDots');const papDotEls={};
+// build a blue dot on the progress bar for each PaP gate step, at its position in the run
+for(let s=1;s<=3;s++){const id=papItems[s];if(!id)continue;const pos=allItems.findIndex(it=>it.id===id);const pct=((pos+1)/allItems.length)*100;const d=document.createElement('div');d.className='pap-dot-m';d.style.left=pct+'%';d.title='Pack-a-Punch step '+s;papDotsEl.appendChild(d);papDotEls[s]=d;}
+const earnedEl=document.getElementById('earned'),targetEl=document.getElementById('target');
+const tkLabel=document.getElementById('tkLabel'),tkVal=document.getElementById('tkVal');
+totalEl.textContent=allItems.length;
+function toggle(id,li){state[id]=!state[id];li.classList.toggle('checked',state[id]);localStorage.setItem(STORE_KEY,JSON.stringify(state));update();}
+function update(){
+  let done=0,spent=0,doors=0,maxRound=0;
+  allItems.forEach(it=>{if(state[it.id]){done++;if(it.obj.cost){if(it.obj.ct==='team')doors+=it.obj.cost;else spent+=it.obj.cost;}const r=itemRound[it.id];if(r&&r>maxRound)maxRound=r;}});
+  doneEl.textContent=done;
+  const pct=allItems.length?(done/allItems.length*100):0;fill.style.width=pct+'%';
+  const complete=done===allItems.length&&done>0;fill.classList.toggle('done',complete);victory.classList.toggle('show',complete);
+  spentEl.textContent=fmtk(spent);doorEl.textContent=fmtk(doors);
+  // on-track estimate: est income at current round (per player) minus per-player spend
+  tkVal.classList.remove('ahead','tight','behind');
+  if(maxRound===0){earnedEl.textContent='—';targetEl.textContent='—';tkLabel.textContent='On track';tkVal.textContent='start checking';}
+  else{
+    const est=INCOME[Math.min(maxRound,INCOME.length)-1];
+    const cushion=est-spent;
+    const tgt=cumThroughRound[Math.min(maxRound,cumThroughRound.length-1)];
+    earnedEl.textContent='~'+fmtk(est);
+    targetEl.textContent='~'+fmtk(tgt);
+    tkLabel.textContent='On track (≈R'+maxRound+')';
+    const sign=cushion>=0?'+':'−';
+    let word,cls;
+    if(cushion>=4000){word='comfortable';cls='ahead';}
+    else if(cushion>=0){word='tight';cls='tight';}
+    else{word='behind';cls='behind';}
+    tkVal.classList.add(cls);
+    tkVal.textContent='~'+fmtk(est)+' − '+fmtk(spent)+' = '+sign+fmtk(Math.abs(cushion))+' · '+word;
+  }
+  roundChips.forEach(rc=>{const allDone=rc.ids.length>0&&rc.ids.every(i=>state[i]);rc.chip.classList.toggle('rdone',allDone||!!state[rc.rkey]);});
+  for(let s=1;s<=3;s++){const id=papItems[s];if(papDotEls[s])papDotEls[s].classList.toggle('on',!!(id&&state[id]));}
+}
+function doReset(){state={};localStorage.removeItem(STORE_KEY);document.querySelectorAll('li.task').forEach(li=>li.classList.remove('checked'));document.querySelectorAll('.rnd').forEach(c=>c.classList.remove('rdone'));update();}
+document.getElementById('reset').addEventListener('click',doReset);
+document.getElementById('resetList').addEventListener('click',doReset);
+renderThumbs();update();
+</script>
+</body>
+</html>

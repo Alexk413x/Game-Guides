@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zombies Run Sheets</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Barlow+Condensed:wght@400;500;600&family=Barlow:wght@400;500;600&display=swap');
+  :root{--night:#0b0f0c;--panel:#141a15;--panel2:#1b231c;--ash:#2a332a;--bone:#e6e8e0;--mute:#8a948a;--tox:#7cc242;--tox-dim:#4f7a2c;--ember:#d8762e;--blue:#3aa0c7;}
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  body{font-family:'Barlow',system-ui,sans-serif;background:radial-gradient(120% 80% at 50% -10%, rgba(124,194,66,.10), transparent 60%),radial-gradient(100% 60% at 50% 110%, rgba(216,118,46,.07), transparent 60%),var(--night);color:var(--bone);line-height:1.5;min-height:100vh;}
+  body::before{content:"";position:fixed;inset:0;pointer-events:none;z-index:0;background:radial-gradient(60% 40% at 20% 30%, rgba(201,205,194,.05), transparent 70%),radial-gradient(50% 35% at 80% 60%, rgba(201,205,194,.04), transparent 70%);animation:drift 22s ease-in-out infinite alternate;}
+  @keyframes drift{from{transform:translateX(-3%) translateY(0)}to{transform:translateX(3%) translateY(-2%)}}
+  .wrap{position:relative;z-index:1;max-width:680px;margin:0 auto;padding:0 18px 60px;}
+  header{padding:54px 0 26px;border-bottom:1px solid var(--ash);text-align:center;}
+  .eyebrow{font-family:'Barlow Condensed',sans-serif;letter-spacing:.32em;text-transform:uppercase;font-size:.74rem;color:var(--tox);font-weight:600;margin-bottom:12px;}
+  h1{font-family:'Oswald',sans-serif;font-weight:700;font-size:clamp(2.2rem,8vw,3.4rem);line-height:.98;text-transform:uppercase;letter-spacing:.01em;}
+  h1 .sub{display:block;color:var(--ember);font-size:.42em;font-weight:600;letter-spacing:.08em;margin-top:8px;}
+  .lede{margin-top:16px;color:var(--mute);font-family:'Barlow Condensed',sans-serif;font-size:1.1rem;letter-spacing:.02em;}
+  .grid{margin-top:32px;display:flex;flex-direction:column;gap:14px;}
+  a.guide{display:flex;align-items:center;gap:16px;text-decoration:none;background:var(--panel);border:1px solid var(--ash);border-left:4px solid var(--tox);border-radius:12px;padding:20px 20px;transition:background .15s,border-color .15s,transform .08s;}
+  a.guide:hover{background:var(--panel2);border-color:#3a463a;border-left-color:var(--tox);}
+  a.guide:active{transform:scale(.99);}
+  a.guide.soon{border-left-color:var(--ash);opacity:.6;cursor:default;pointer-events:none;}
+  .g-icon{flex-shrink:0;width:46px;height:46px;border-radius:10px;background:#0e140e;border:1px solid var(--ash);display:grid;place-items:center;}
+  .g-icon svg{width:26px;height:26px;}
+  .g-body{flex:1;min-width:0;}
+  .g-title{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:1.18rem;letter-spacing:.02em;color:var(--bone);}
+  .g-sub{font-family:'Barlow Condensed',sans-serif;color:var(--mute);font-size:.96rem;letter-spacing:.02em;margin-top:2px;}
+  .g-tag{flex-shrink:0;font-family:'Barlow Condensed',sans-serif;font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 9px;border-radius:5px;}
+  .g-tag.live{color:var(--night);background:var(--tox);}
+  .g-tag.soon{color:var(--mute);background:transparent;border:1px solid var(--ash);}
+  .g-arrow{flex-shrink:0;color:var(--mute);font-size:1.3rem;font-family:'Oswald';}
+  footer{margin-top:38px;text-align:center;color:var(--mute);font-size:.84rem;font-family:'Barlow Condensed',sans-serif;letter-spacing:.04em;}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <div class="eyebrow">Black Ops 2 · Zombies</div>
+      <h1>Run Sheets<span class="sub">Interactive Easter-Egg Checklists</span></h1>
+      <div class="lede">Pick a map. Each guide is a tap-to-check run sheet with maps, costs, and a budget tracker.</div>
+    </header>
+
+    <div class="grid">
+
+      <a class="guide" href="tranzit.html">
+        <span class="g-icon" style="color:var(--tox)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3L7 20M12 3l5 17M8.5 9h7M7.7 13h8.6"/></svg>
+        </span>
+        <span class="g-body">
+          <span class="g-title">TranZit</span>
+          <span class="g-sub">Tower of Babble · Richtofen · 3 players</span>
+        </span>
+        <span class="g-tag live">Live</span>
+        <span class="g-arrow">›</span>
+      </a>
+
+      <a class="guide soon">
+        <span class="g-icon" style="color:var(--mute)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="6" y="3" width="12" height="18" rx="1"/><line x1="6" y1="9" x2="18" y2="9"/><line x1="6" y1="15" x2="18" y2="15"/></svg>
+        </span>
+        <span class="g-body">
+          <span class="g-title">Die Rise</span>
+          <span class="g-sub">Mined Games · coming soon</span>
+        </span>
+        <span class="g-tag soon">Soon</span>
+        <span class="g-arrow" style="opacity:.3">›</span>
+      </a>
+
+    </div>
+
+    <footer>Tip: bookmark this page — each guide saves your progress in your own browser.</footer>
+  </div>
+</body>
+</html>
