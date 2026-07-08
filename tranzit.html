@@ -232,7 +232,7 @@
         <tr><td class="lab">Jugger-Nog</td><td class="r">2,500</td><td class="lab">Double Tap II</td><td class="r">2,000</td></tr>
         <tr><td class="lab">Pack-a-Punch (1 gun)</td><td class="r">5,000</td><td class="lab"><b style="color:#fff">Essential total</b></td><td class="r"><b>~14,000</b></td></tr>
       </table>
-      <p style="margin-top:10px;font-size:.92rem;color:var(--fog)"><b>Other costs:</b> Mystery Box <b style="color:var(--ember)">950</b>/spin · M16 wall <b style="color:var(--ember)">1,200</b> (optional) · each point-door <b style="color:var(--fog)">750</b> (one player pays). Optional 5th/6th perks: Stamin-Up 2,000, Tombstone 2,000.</p>
+      <p style="margin-top:10px;font-size:.92rem;color:var(--fog)"><b>Other costs:</b> Mystery Box <b style="color:var(--ember)">950</b>/spin · M14 wall (Depot) <b style="color:var(--ember)">500</b> · M16 wall (Tunnel) <b style="color:var(--ember)">1,200</b> · each point-door <b style="color:var(--fog)">750</b> (one player pays). Optional 5th/6th perks: Stamin-Up 2,000, Tombstone 2,000.</p>
       <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Rough income</b> — per-player cumulative points if you're playing well in a 4-player game. <i>Estimate only; reviving or setting up the EE earns less, so treat as a sanity check, not a guarantee.</i></p>
       <div class="est-grid" id="estgrid"></div>
     </div>
@@ -240,7 +240,7 @@
 
   <section>
     <div class="ref-title"><span class="dot" style="background:var(--ember)"></span>Best Gun: M16 → Skullcrusher</div>
-    <div class="card"><p>Cheap wall buy at the Bus Depot (no box gamble), and Pack-a-Punched it becomes a 3-round-burst beast with an underbarrel grenade launcher — those grenades double as Ray Gun backup for the explosive Pylon step. <i>Honorable mentions: MP5 → MP58 for fast training; keep the Ray Gun UN-upgraded — the ordinary Ray Gun counts as explosive for the kill step.</i></p></div>
+    <div class="card"><p>Cheap wall buy in the Tunnel — first bus stop, no box gamble — and Pack-a-Punched it becomes a 3-round-burst beast with an underbarrel grenade launcher — those grenades double as Ray Gun backup for the explosive Pylon step. <i>Honorable mentions: MP5 → MP58 for fast training; keep the Ray Gun UN-upgraded — the ordinary Ray Gun counts as explosive for the kill step.</i></p></div>
   </section>
 
   <section>
@@ -278,13 +278,14 @@
     <rect class="stop" x="612" y="486" width="150" height="40" rx="7"/><text class="stopname" x="687" y="510">TOWN</text>
     <g style="color:#7cc242"><use href="#ic-turbine" x="99" y="431" width="18" height="18"/></g><text class="iclbl" x="108" y="461">Turbine</text>
     <g style="color:#9aa698"><use href="#ic-door" x="149" y="431" width="18" height="18"/></g><text class="iclbl" x="158" y="461">Door 750</text>
-    <g style="color:#d8762e"><use href="#ic-gun" x="196" y="431" width="18" height="18"/></g><text class="iclbl" x="205" y="461">M16</text>
+    <g style="color:#d8762e"><use href="#ic-gun" x="196" y="431" width="18" height="18"/></g><text class="iclbl" x="205" y="461">M14</text>
     <g style="color:#5fcf9e"><use href="#ic-perk" x="64" y="442" width="16" height="16"/></g><text class="iclbl" x="72" y="470">Revive</text>
     <g style="color:#7cc242"><use href="#ic-lamp" x="231" y="487" width="18" height="18"/></g><text class="iclbl" x="240" y="517">Lamp</text>
     <g style="color:#7cc242"><use href="#ic-lamp" x="149" y="91" width="18" height="18"/></g><text class="iclbl" x="158" y="87">Lamp</text>
     <g style="color:#d8a832"><use href="#ic-box" x="233" y="125" width="18" height="18"/></g><text class="iclbl" x="242" y="155">Box</text>
     <g style="color:#5fcf9e"><use href="#ic-perk" x="233" y="98" width="16" height="16"/></g><text class="iclbl" x="241" y="95">Speed</text>
     <g style="color:#7cc242"><use href="#ic-part" x="141" y="297" width="18" height="18"/></g><text class="pinlbl s" x="166" y="311" fill="#c9cdc2">Jet Engine (Tunnel)</text>
+    <g style="color:#d8762e"><use href="#ic-gun" x="141" y="325" width="18" height="18"/></g><text class="pinlbl s" x="166" y="339" fill="#c9cdc2">M16 wall (Tunnel)</text>
     <g style="color:#5fcf9e"><use href="#ic-perk" x="436" y="62" width="16" height="16"/></g><text class="iclbl" x="444" y="58">Double Tap</text>
     <g style="color:#3aa0c7"><use href="#ic-pylon" x="509" y="181" width="18" height="18"/></g><text class="pinlbl s" x="531" y="194" fill="#3aa0c7">Pylon — EE Tower (left)</text>
     <g style="color:#7cc242"><use href="#ic-part" x="509" y="208" width="18" height="18"/></g><text class="pinlbl s" x="531" y="221" fill="#c9cdc2">Handbrake — Nacht (right)</text>
@@ -343,10 +344,11 @@
 const ROUNDS=[
  {r:"Round 1",t:"Bus Depot — Setup",core:false,note:"Knife only for the first couple rounds to bank max points before guns get weak.",tasks:[
    {t:"Build the <b>Turbine</b> in the spawn room (mannequin, tail, fan)",ic:"turbine",cat:"turbine",x:108,y:440},
-   {t:"Buy the <b>M16</b> off the wall (faces you as you exit) — optional",ic:"gun",cat:"gun",x:205,y:440,cost:1200,ct:"player",opt:true},
+   {t:"Buy the <b>M14</b> off the wall (faces you as you exit) — optional early-round points gun",ic:"gun",cat:"gun",x:205,y:440,cost:500,ct:"player",opt:true},
    {t:"Open the Bus Depot exit door — last, then board the bus",ic:"door",cat:"door",x:158,y:440,cost:750,ct:"team"}]},
  {r:"Round 2",t:"Tunnel",core:false,note:"Shoot zombies a few times then knife for the point bonus while you still can.",tasks:[
-   {t:"Hop off in the Tunnel; grab the <b>Jet Engine</b> (Jet Gun part 1)",ic:"part",cat:"pickup",x:150,y:306}]},
+   {t:"Hop off in the Tunnel; grab the <b>Jet Engine</b> (Jet Gun part 1)",ic:"part",cat:"pickup",x:150,y:306},
+   {t:"Buy the <b>M16</b> off the Tunnel wall — your Skullcrusher base gun",ic:"gun",cat:"gun",x:150,y:334,cost:1200,ct:"player",opt:true}]},
  {r:"Round 3",t:"Diner",core:false,tasks:[
    {t:"Hit the <b>Mystery Box</b> at the Diner for a starter weapon (per spin)",ic:"box",cat:"box",x:242,y:134,cost:950,ct:"player"}]},
  {r:"Round 4",t:"Travel",core:false,note:"Open round — ride the bus toward Power, train zombies in a loop, bank points. Nothing required.",tasks:[]},
@@ -399,7 +401,7 @@ const DIAGRAMS=[
  {id:"ending",title:"Richtofen Ending",cap:"EMP the 4 green lamps",src:"src-ending"},
 ];
 const MASTER=DIAGRAMS[0];
-const STORE_KEY="tranzit_tob_v6";
+const STORE_KEY="tranzit_tob_v7";
 let state={};
 try{state=JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){state={};}
 function fmt(n){return n.toLocaleString();}
