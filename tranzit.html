@@ -49,6 +49,8 @@
   .sec-head h2{font-family:'Oswald',sans-serif;font-weight:600;text-transform:uppercase;font-size:1.18rem;letter-spacing:.02em;color:var(--bone);}
   .sec-head.core .rnd{background:linear-gradient(135deg,var(--ember),#b85d1e);color:#1a0f06;border:none;}
   .sec-head.core h2{color:var(--ember);}
+  .sec-head .rmeta{margin-left:auto;font-family:'Barlow Condensed',sans-serif;font-size:.8rem;color:var(--mute);letter-spacing:.05em;white-space:nowrap;}
+  .sec-head .rmeta b{color:var(--gold);font-weight:600;}
   .rnd.rdone{background:var(--tox);color:var(--night);border-color:var(--tox);}
   .rnd.rdone::after{content:" ✓";font-weight:700;}
   .empty-note{font-family:'Barlow',sans-serif;font-size:.93rem;color:var(--mute);font-style:italic;background:var(--panel);border:1px dashed var(--ash);border-radius:9px;padding:11px 14px;}
@@ -233,8 +235,7 @@
         <tr><td class="lab">Pack-a-Punch (1 gun)</td><td class="r">5,000</td><td class="lab"><b style="color:#fff">Essential total</b></td><td class="r"><b>~14,000</b></td></tr>
       </table>
       <p style="margin-top:10px;font-size:.92rem;color:var(--fog)"><b>Other costs:</b> Mystery Box <b style="color:var(--ember)">950</b>/spin · M14 wall (Depot) <b style="color:var(--ember)">500</b> · M16 wall (Tunnel) <b style="color:var(--ember)">1,200</b> · each point-door <b style="color:var(--fog)">750</b> (one player pays). Optional 5th/6th perks: Stamin-Up 2,000, Tombstone 2,000.</p>
-      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Rough income</b> — per-player cumulative points if you're playing well in a 4-player game. <i>Estimate only; reviving or setting up the EE earns less, so treat as a sanity check, not a guarantee.</i></p>
-      <div class="est-grid" id="estgrid"></div>
+      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><i>Each round header shows the <b style="color:var(--gold)">~pts</b> you should have earned by then (cumulative, per player, 4-player pace) — a sanity check, not a guarantee; reviving and EE setup earn less.</i></p>
     </div>
   </section>
 
@@ -242,8 +243,7 @@
     <div class="ref-title"><span class="dot" style="background:var(--blue)"></span>Bus &amp; Round Timing</div>
     <div class="card">
       <p><b>The bus:</b> a full loop (Depot → Diner → Farm → Power → Town → Depot) takes about <b style="color:var(--blue)">7 minutes</b>. It waits only briefly at each stop on its own timer — <b>when the horn honks, it's leaving</b>, round in progress or not. Miss it and you either walk the fog or lose most of a lap, so call "bus is moving!" on comms before every leg.</p>
-      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Round pacing</b> — rough length of each round for a 4-player crew doing objectives (zombie counts scale with player count). The <b style="color:var(--fog)">@ time</b> is roughly when that round should start on the game clock — if the real clock is well past it, tighten up.</p>
-      <div class="est-grid" id="timegrid"></div>
+      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Round pacing</b> lives on each round header: <b style="color:var(--fog)">⏱ ~length · @game-clock start · ~points per player</b>. If the real clock is well past the @ time, tighten up.</p>
       <p style="margin-top:10px;font-size:.85rem;color:var(--mute)"><i>Full-run target: Pylon glowing blue by Round 15 ≈ <b style="color:var(--fog)">under an hour</b>. One bus loop ≈ 7 min, so from Round 5 on you get roughly two rounds per lap — plan each leg's objective before boarding. Estimates only: box luck and revives stretch rounds, pure-survival rounds run shorter.</i></p>
     </div>
   </section>
@@ -431,14 +431,10 @@ function fmtk(n){if(n>=1000){const v=n/1000;return (Math.round(v*10)/10)+'k';}re
 const thumbsEl=document.getElementById('thumbs');
 function svgMarkup(s){return document.getElementById(s).innerHTML;}
 function renderThumbs(){thumbsEl.innerHTML='';DIAGRAMS.forEach(d=>{const t=document.createElement('div');t.className='thumb '+(d.feature?'feature':'small');t.innerHTML=`<span class="frame">${svgMarkup(d.src)}</span><span class="zoomtag">zoom</span><span class="cap">${d.cap}</span>`;t.addEventListener('click',()=>openLB(d));thumbsEl.appendChild(t);});}
-// income estimate grid
-const estgrid=document.getElementById('estgrid');
-INCOME.forEach((v,i)=>{const c=document.createElement('div');c.className='est-cell';c.innerHTML=`<div class="rr">R${i+1}</div><div class="vv">${(v/1000)}k</div>`;estgrid.appendChild(c);});
-// round pacing grid — est minutes per round at a 4-player objective pace
+// per-round pacing (est minutes at a 4-player objective pace) + clock starts — rendered onto each round header
 const RTIME=[2,2,2,2.5,3,3,3.5,3.5,3.5,4.5,4.5,4.5,5,5,5.5];
-const timegrid=document.getElementById('timegrid');
-let clock=0;
-RTIME.forEach((v,i)=>{const c=document.createElement('div');c.className='est-cell';const dur=(v%1?Math.floor(v)+'½':v)+'m';c.innerHTML=`<div class="rr">R${i+1} · @${Math.round(clock)}m</div><div class="vv">~${dur}</div>`;timegrid.appendChild(c);clock+=v;});
+const RSTART=[];RTIME.reduce((a,v,i)=>{RSTART[i]=a;return a+v;},0);
+function fmtDur(v){return '~'+(v%1?Math.floor(v)+'½':v)+'m';}
 const lb=document.getElementById('lb'),lbStage=document.getElementById('lbStage'),lbWrap=document.getElementById('lbWrap'),lbTitle=document.getElementById('lbTitle');
 let cur=null,scale=1,tx=0,ty=0;
 function applyT(){lbStage.style.transform=`translate(-50%,-50%) translate(${tx}px,${ty}px) scale(${scale})`;}
@@ -465,7 +461,7 @@ function makeRow(obj,id){const li=document.createElement('li');li.className='tas
 const roundsEl=document.getElementById('rounds');const cumThroughRound=[0];
 ROUNDS.forEach((group,ri)=>{
   let rc=0;(group.tasks||[]).forEach(t=>{if(typeof t==='object'&&t.cost&&t.ct==='player'&&!t.opt)rc+=t.cost;});cumThroughRound[ri+1]=cumThroughRound[ri]+rc;
-  const sec=document.createElement('section');const head=document.createElement('div');head.className='sec-head'+(group.core?' core':'');const chip=document.createElement('span');chip.className='rnd';chip.textContent=group.r;const rkey='r'+ri;chip.classList.toggle('rdone',!!state[rkey]);chip.title='Tap to mark this round done/undone';chip.addEventListener('click',()=>{state[rkey]=!state[rkey];localStorage.setItem(STORE_KEY,JSON.stringify(state));chip.classList.toggle('rdone',!!state[rkey]);});head.appendChild(chip);const h2=document.createElement('h2');h2.textContent=group.t;head.appendChild(h2);if(group.alert){const al=document.createElement('span');al.className='alert-tag';al.textContent=group.alert;head.appendChild(al);}sec.appendChild(head);
+  const sec=document.createElement('section');const head=document.createElement('div');head.className='sec-head'+(group.core?' core':'');const chip=document.createElement('span');chip.className='rnd';chip.textContent=group.r;const rkey='r'+ri;chip.classList.toggle('rdone',!!state[rkey]);chip.title='Tap to mark this round done/undone';chip.addEventListener('click',()=>{state[rkey]=!state[rkey];localStorage.setItem(STORE_KEY,JSON.stringify(state));chip.classList.toggle('rdone',!!state[rkey]);});head.appendChild(chip);const h2=document.createElement('h2');h2.textContent=group.t;head.appendChild(h2);if(group.alert){const al=document.createElement('span');al.className='alert-tag';al.textContent=group.alert;head.appendChild(al);}if(ri<RTIME.length){const mt=document.createElement('span');mt.className='rmeta';mt.title='Est. round length · game-clock start · cumulative points per player';mt.innerHTML=`⏱ ${fmtDur(RTIME[ri])} · @${Math.round(RSTART[ri])}m · <b>~${fmtk(INCOME[ri])} pts</b>`;head.appendChild(mt);}sec.appendChild(head);
   if(group.note){const nt=document.createElement('div');nt.className='round-note';nt.innerHTML='› '+group.note;sec.appendChild(nt);}
   const rids=[];if(!group.tasks||group.tasks.length===0){if(!group.note){const note=document.createElement('div');note.className='empty-note';note.textContent="No required objective this round.";sec.appendChild(note);}}else{const ul=document.createElement('ul');group.tasks.forEach(task=>{const obj=typeof task==='string'?{t:task}:task;const id='i'+(idx++);allItems.push({id,obj});rids.push(id);itemRound[id]=ri+1;if(obj.pap)papItems[obj.pap]=id;ul.appendChild(makeRow(obj,id));});sec.appendChild(ul);}roundChips.push({chip,ids:rids,rkey});roundsEl.appendChild(sec);});
 
