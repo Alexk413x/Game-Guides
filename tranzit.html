@@ -239,6 +239,16 @@
   </section>
 
   <section>
+    <div class="ref-title"><span class="dot" style="background:var(--blue)"></span>Bus &amp; Round Timing</div>
+    <div class="card">
+      <p><b>The bus:</b> a full loop (Depot → Diner → Farm → Power → Town → Depot) takes about <b style="color:var(--blue)">7 minutes</b>. It waits only briefly at each stop on its own timer — <b>when the horn honks, it's leaving</b>, round in progress or not. Miss it and you either walk the fog or lose most of a lap, so call "bus is moving!" on comms before every leg.</p>
+      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Round pacing</b> — rough length of each round for a 4-player crew doing objectives (zombie counts scale with player count). The <b style="color:var(--fog)">@ time</b> is roughly when that round should start on the game clock — if the real clock is well past it, tighten up.</p>
+      <div class="est-grid" id="timegrid"></div>
+      <p style="margin-top:10px;font-size:.85rem;color:var(--mute)"><i>Full-run target: Pylon glowing blue by Round 15 ≈ <b style="color:var(--fog)">under an hour</b>. One bus loop ≈ 7 min, so from Round 5 on you get roughly two rounds per lap — plan each leg's objective before boarding. Estimates only: box luck and revives stretch rounds, pure-survival rounds run shorter.</i></p>
+    </div>
+  </section>
+
+  <section>
     <div class="ref-title"><span class="dot" style="background:var(--ember)"></span>Best Gun: M16 → Skullcrusher</div>
     <div class="card"><p>Cheap wall buy in the Tunnel — first bus stop, no box gamble — and Pack-a-Punched it becomes a 3-round-burst beast with an underbarrel grenade launcher — those grenades double as Ray Gun backup for the explosive Pylon step. <i>Honorable mention: the Diner MP5 for cheap fast training. The Ray Gun (either version) counts as explosive for the Pylon kill step.</i></p></div>
   </section>
@@ -412,6 +422,11 @@ function renderThumbs(){thumbsEl.innerHTML='';DIAGRAMS.forEach(d=>{const t=docum
 // income estimate grid
 const estgrid=document.getElementById('estgrid');
 INCOME.forEach((v,i)=>{const c=document.createElement('div');c.className='est-cell';c.innerHTML=`<div class="rr">R${i+1}</div><div class="vv">${(v/1000)}k</div>`;estgrid.appendChild(c);});
+// round pacing grid — est minutes per round at a 4-player objective pace
+const RTIME=[2,2,2,2.5,3,3,3.5,3.5,3.5,4.5,4.5,4.5,5,5,5.5];
+const timegrid=document.getElementById('timegrid');
+let clock=0;
+RTIME.forEach((v,i)=>{const c=document.createElement('div');c.className='est-cell';const dur=(v%1?Math.floor(v)+'½':v)+'m';c.innerHTML=`<div class="rr">R${i+1} · @${Math.round(clock)}m</div><div class="vv">~${dur}</div>`;timegrid.appendChild(c);clock+=v;});
 const lb=document.getElementById('lb'),lbStage=document.getElementById('lbStage'),lbWrap=document.getElementById('lbWrap'),lbTitle=document.getElementById('lbTitle');
 let cur=null,scale=1,tx=0,ty=0;
 function applyT(){lbStage.style.transform=`translate(-50%,-50%) translate(${tx}px,${ty}px) scale(${scale})`;}
