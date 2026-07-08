@@ -249,6 +249,17 @@
   </section>
 
   <section>
+    <div class="ref-title"><span class="dot" style="background:var(--tox)"></span>Fog &amp; Denizens — Getting Between POIs</div>
+    <div class="card">
+      <p><b>The thing on your head is a Denizen.</b> They spawn only in the fog between locations and keep coming while you're out there — lit POIs and the bus are safe. When one latches on, don't keep sprinting in circles: stop and <b>mash melee</b> — it takes <b>5 knife hits</b> to kill one on your head, but only <b>2 with Galvaknuckles</b>. Better: when you hear the leap-scream, <b>turn toward it and knife as it jumps</b> — mid-air they die to one Galvaknuckle hit before ever touching you.</p>
+      <p style="margin-top:8px"><b>Galvaknuckles (6,000)</b> live on the <b>Diner roof</b> — hop over from the roof of the bus as it stops. Expensive, but the fog crew (C + D) should grab them before the part runs: they also one-hit zombies through round 13.</p>
+      <p style="margin-top:8px"><b>Lamppost portals:</b> run with a Denizen still on your head under a <b>green-lit lamppost</b> — it jumps off and digs a glowing portal. Jump on it to teleport to a random spot on the map. Great panic button mid-fog, and the same mechanic behind the EE lamp trick.</p>
+      <p style="margin-top:8px"><b style="color:var(--bone)">Bus or run?</b> The bus only drives <i>one way</i> around the loop (Depot → Diner → Farm → Power → Town), so:</p>
+      <p style="margin-top:6px;font-size:.95rem">· <b>Ride the bus</b> when the whole squad is moving forward along the route, when you're 2+ stops from the target, or early rounds before Jugg — zero Denizen risk.<br>· <b>Run the fog</b> for short adjacent hops (Depot↔Diner through the tunnel, Farm↔Power through the cornfield, Power↔Town past the cabin), whenever your target is <i>behind</i> the bus direction, or when the bus just pulled away — waiting costs most of a 7-minute lap.<br>· <b>Always make a crawler first</b> for planned fog trips, and go in pairs: one carries, one covers.</p>
+    </div>
+  </section>
+
+  <section>
     <div class="ref-title"><span class="dot" style="background:var(--ember)"></span>Best Gun: M16 → Skullcrusher</div>
     <div class="card"><p>Cheap wall buy in the Tunnel — first bus stop, no box gamble — and Pack-a-Punched it becomes a 3-round-burst beast with an underbarrel grenade launcher — those grenades double as Ray Gun backup for the explosive Pylon step. <i>Honorable mention: the Diner MP5 for cheap fast training. The Ray Gun (either version) counts as explosive for the Pylon kill step.</i></p></div>
   </section>
@@ -374,6 +385,7 @@ const ROUNDS=[
  {r:"Round 7",t:"Fog — Nacht",core:false,alert:"Fog + Denizens — keep moving, don't stop in the open",note:"Denizens latch on in the fog; melee them off fast or you'll get pulled down. Run fog trips <b>in pairs</b> — one carries the part, one escorts and melees Denizens — while the other two hold the bus route.",tasks:[
    {t:"<b>Make a crawler</b> before heading into the fog (so you're not rushed)"},
    {t:"<b>Buy Speed Cola</b> — Diner (first stop out of the Depot) · faster reloads & barrier rebuilds",ic:"perk",cat:"perk",x:241,y:106,cost:3000,ct:"player"},
+   {t:"<i>Fog crew (C+D):</i> <b>Galvaknuckles</b> — Diner roof, hop over from the bus roof · 1-hit Denizens mid-leap",ic:"gun",cat:"gun",x:250,y:120,cost:6000,ct:"player",opt:true},
    {t:"<b>Buy Double Tap Root Beer II</b> — Farm (upper floor of barn) · +33% bullet damage",ic:"perk",cat:"perk",x:444,y:70,cost:2000,ct:"player"},
    {t:"Hop off at Farm: grab the <b>Handbrake</b> (part 3) at Nacht der Untoten, through the cornfield",ic:"part",cat:"pickup",x:518,y:217}]},
  {r:"Round 8",t:"Fog — Cabin",core:false,alert:"Fog + Denizens",note:"Same pair split: <b>C + D</b> fetch the gauge while <b>A + B</b> keep the round alive near Power and guard the bus.",tasks:[
@@ -411,7 +423,7 @@ const DIAGRAMS=[
  {id:"ending",title:"Richtofen Ending",cap:"EMP the 4 green lamps",src:"src-ending"},
 ];
 const MASTER=DIAGRAMS[0];
-const STORE_KEY="tranzit_tob_v10";
+const STORE_KEY="tranzit_tob_v11";
 let state={};
 try{state=JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){state={};}
 function fmt(n){return n.toLocaleString();}
