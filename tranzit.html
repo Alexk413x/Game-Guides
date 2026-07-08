@@ -355,11 +355,11 @@ const ROUNDS=[
  {r:"Round 5",t:"Power Station — Switch",core:false,alert:"Turning power ON releases the Avogadro for the rest of the game",tasks:[
    {t:"Open the Power shed door — and drop inside",ic:"door",cat:"door",x:680,y:226,cost:750,ct:"team"},
    {t:"Build the power switch (hand, circuit box, lever)",ic:"power",cat:"power",x:712,y:226},
-   {t:"<b>Turn the power ON</b> (Avogadro spawns; Richtofen talks to Stuhlinger)",ic:"power",cat:"power",x:712,y:226}]},
+   {t:"<b>Turn the power ON</b> (Avogadro spawns; Richtofen talks to Stuhlinger)",ic:"power",cat:"power",x:712,y:226},
+   {t:"Grab the <b>Wires</b> (Jet Gun part 2) — the shutter by the Tombstone machine opens once power is on",ic:"part",cat:"pickup",x:660,y:305}]},
  {r:"Round 6",t:"Jugger-Nog — Priority",core:false,note:"Jugg is the #1 buy once power's on — go straight for it before the fog runs. Survivability beats everything else here.",tasks:[
    {t:"Open the upstairs door in the building beside the bank (Town)",ic:"door",cat:"door",x:596,y:452,cost:750,ct:"team"},
    {t:"<b>Buy Jugger-Nog</b> (all 4 players, top priority)",ic:"perk",cat:"perk",x:626,y:438,cost:2500,ct:"player"},
-   {t:"Grab the <b>Wires</b> (Jet Gun part 2) — Power Station, lava-side area by the Tombstone machine",ic:"part",cat:"pickup",x:660,y:305},
    {t:"<b>Buy Quick Revive</b> — Bus Depot (far end of spawn hallway) · faster revives",ic:"perk",cat:"perk",x:72,y:450,cost:1500,ct:"player"}]},
  {r:"Round 7",t:"Fog — Nacht",core:false,alert:"Fog + Denizens — keep moving, don't stop in the open",note:"Denizens latch on in the fog; melee them off fast or you'll get pulled down. Run fog trips <b>in pairs</b> — one carries the part, one escorts and melees Denizens — while the other two hold the bus route.",tasks:[
    {t:"<b>Make a crawler</b> before heading into the fog (so you're not rushed)"},
@@ -401,7 +401,7 @@ const DIAGRAMS=[
  {id:"ending",title:"Richtofen Ending",cap:"EMP the 4 green lamps",src:"src-ending"},
 ];
 const MASTER=DIAGRAMS[0];
-const STORE_KEY="tranzit_tob_v7";
+const STORE_KEY="tranzit_tob_v8";
 let state={};
 try{state=JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){state={};}
 function fmt(n){return n.toLocaleString();}
