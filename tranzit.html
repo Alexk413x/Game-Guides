@@ -363,9 +363,9 @@ const ROUNDS=[
    {t:"<b>Buy Quick Revive</b> — Bus Depot (far end of spawn hallway) · faster revives",ic:"perk",cat:"perk",x:72,y:450,cost:1500,ct:"player"}]},
  {r:"Round 7",t:"Fog — Nacht",core:false,alert:"Fog + Denizens — keep moving, don't stop in the open",note:"Denizens latch on in the fog; melee them off fast or you'll get pulled down. Run fog trips <b>in pairs</b> — one carries the part, one escorts and melees Denizens — while the other two hold the bus route.",tasks:[
    {t:"<b>Make a crawler</b> before heading into the fog (so you're not rushed)"},
-   {t:"Grab the <b>Handbrake</b> (part 3) at Nacht der Untoten — cornfield, right from Farm",ic:"part",cat:"pickup",x:518,y:217},
+   {t:"<b>Buy Speed Cola</b> — Diner (first stop out of the Depot) · faster reloads & barrier rebuilds",ic:"perk",cat:"perk",x:241,y:106,cost:3000,ct:"player"},
    {t:"<b>Buy Double Tap Root Beer II</b> — Farm (upper floor of barn) · +33% bullet damage",ic:"perk",cat:"perk",x:444,y:70,cost:2000,ct:"player"},
-   {t:"<b>Buy Speed Cola</b> — Diner · faster reloads & barrier rebuilds",ic:"perk",cat:"perk",x:241,y:106,cost:3000,ct:"player"}]},
+   {t:"Hop off at Farm: grab the <b>Handbrake</b> (part 3) at Nacht der Untoten, through the cornfield",ic:"part",cat:"pickup",x:518,y:217}]},
  {r:"Round 8",t:"Fog — Cabin",core:false,alert:"Fog + Denizens",note:"Same pair split: <b>C + D</b> fetch the gauge while <b>A + B</b> keep the round alive near Power and guard the bus.",tasks:[
    {t:"Grab the <b>Pressure Gauge</b> (part 4) at the Hunter's Cabin — in the fog between Power and Town",ic:"part",cat:"pickup",x:720,y:372}]},
  {r:"Round 9",t:"Town — Jet Gun",core:false,tasks:[
@@ -401,7 +401,7 @@ const DIAGRAMS=[
  {id:"ending",title:"Richtofen Ending",cap:"EMP the 4 green lamps",src:"src-ending"},
 ];
 const MASTER=DIAGRAMS[0];
-const STORE_KEY="tranzit_tob_v8";
+const STORE_KEY="tranzit_tob_v9";
 let state={};
 try{state=JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){state={};}
 function fmt(n){return n.toLocaleString();}
