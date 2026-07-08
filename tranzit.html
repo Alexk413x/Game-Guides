@@ -182,8 +182,8 @@
   <header>
     <div class="eyebrow">Green Run · Richtofen Path · Xbox</div>
     <h1>TranZit<span class="sub">Tower of Babble — Run Sheet</span></h1>
-    <div class="meta"><span><b>3 players</b></span><span>·</span><span>Finish Pylon by <b>Round 15</b></span><span>·</span><span>Fog gets brutal past 20</span></div>
-    <div class="warn"><span>⚠</span><span>All 3 players must be in the lobby from the <b>START</b> — progress only saves if you began the match together. No dropping and rejoining mid-run.</span></div>
+    <div class="meta"><span><b>4 players</b></span><span>·</span><span>Finish Pylon by <b>Round 15</b></span><span>·</span><span>Fog gets brutal past 20</span></div>
+    <div class="warn"><span>⚠</span><span>All 4 players must be in the lobby from the <b>START</b> — progress only saves if you began the match together. No dropping and rejoining mid-run.</span></div>
   </header>
   <div class="progress-shell">
     <div class="progress-head"><span class="label">Run</span><div class="bar"><div class="bar-fill" id="fill"></div><div class="pap-dots" id="papDots"></div></div><span class="count"><span id="done">0</span>/<span id="total">0</span></span></div>
@@ -210,7 +210,8 @@
     <ul class="card roles">
       <li><span class="who">Player A — Jet Gun Handler</span><p>Heats the Pylon, holds the Jet Gun, leads the explosive-kill step.</p></li>
       <li><span class="who">Player B — "The Ears" (Stuhlinger)</span><p>Only character who hears Richtofen. Calls out every step confirmation. Keeps a zombie alive between steps.</p></li>
-      <li><span class="who">Player C — Floater / Reviver</span><p>Runs parts collection in parallel, handles crowd control and revives during steps.</p></li>
+      <li><span class="who">Player C — Parts Runner</span><p>Runs parts collection in parallel so the crew never waits — grabs fog pieces while the bus rolls on.</p></li>
+      <li><span class="who">Player D — Floater / Reviver</span><p>Handles crowd control, revives during steps, and covers whichever lane is thinnest. Fourth lamp on the EMP step.</p></li>
     </ul>
   </section>
 
@@ -232,7 +233,7 @@
         <tr><td class="lab">Pack-a-Punch (1 gun)</td><td class="r">5,000</td><td class="lab"><b style="color:#fff">Essential total</b></td><td class="r"><b>~14,000</b></td></tr>
       </table>
       <p style="margin-top:10px;font-size:.92rem;color:var(--fog)"><b>Other costs:</b> Mystery Box <b style="color:var(--ember)">950</b>/spin · M16 wall <b style="color:var(--ember)">1,200</b> (optional) · each point-door <b style="color:var(--fog)">750</b> (one player pays). Optional 5th/6th perks: Stamin-Up 2,000, Tombstone 2,000.</p>
-      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Rough income</b> — per-player cumulative points if you're playing well in a 3-player game. <i>Estimate only; reviving or setting up the EE earns less, so treat as a sanity check, not a guarantee.</i></p>
+      <p style="margin-top:10px;font-size:.9rem;color:var(--mute)"><b style="color:var(--bone)">Rough income</b> — per-player cumulative points if you're playing well in a 4-player game. <i>Estimate only; reviving or setting up the EE earns less, so treat as a sanity check, not a guarantee.</i></p>
       <div class="est-grid" id="estgrid"></div>
     </div>
   </section>
@@ -244,10 +245,10 @@
 
   <section>
     <div class="ref-title"><span class="dot" style="background:var(--tox)"></span>Every-Round Habits</div>
-    <div class="card"><p>Train zombies in loops; don't fight them scattered &nbsp;·&nbsp; Bank-bonus early rounds: shoot zombies a few times before knifing for max points &nbsp;·&nbsp; Player B calls out every Richtofen voice cue &nbsp;·&nbsp; Player C revives and covers crowd control during steps. <b>No dog rounds / no guaranteed Max Ammo</b> in TranZit — refills come from random drops only.</p></div>
+    <div class="card"><p>Train zombies in loops; don't fight them scattered &nbsp;·&nbsp; Bank-bonus early rounds: shoot zombies a few times before knifing for max points &nbsp;·&nbsp; Player B calls out every Richtofen voice cue &nbsp;·&nbsp; Players C and D revive and cover crowd control during steps. <b>No dog rounds / no guaranteed Max Ammo</b> in TranZit — refills come from random drops only.</p></div>
   </section>
 
-  <footer><span>TranZit · Tower of Babble · 3-player Richtofen run sheet</span><button class="reset" id="reset">Reset checklist</button></footer>
+  <footer><span>TranZit · Tower of Babble · 4-player Richtofen run sheet</span><button class="reset" id="reset">Reset checklist</button></footer>
 </div>
 <div class="victory" id="victory">☣ Pylon glows blue — achievement unlocked</div>
 
@@ -332,7 +333,7 @@
     <g transform="translate(760,140)" style="color:#7cc242"><use href="#ic-lamp" x="-11" y="-11" width="22" height="22"/><text x="0" y="30" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#e6e8e0">POWER</text></g>
     <g transform="translate(750,470)" style="color:#7cc242"><use href="#ic-lamp" x="-11" y="-11" width="22" height="22"/><text x="0" y="30" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#e6e8e0">TOWN</text></g>
     <line x1="180" y1="450" x2="420" y2="320" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/><line x1="190" y1="150" x2="425" y2="278" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/><line x1="730" y1="160" x2="478" y2="278" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/><line x1="720" y1="450" x2="480" y2="320" stroke="#d8762e" stroke-width="2" stroke-dasharray="5 6"/>
-    <rect x="300" y="392" width="300" height="74" rx="9" fill="#10180f" stroke="#34402d" stroke-width="1.5"/><text x="450" y="414" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#d8762e">3-PLAYER METHOD</text><text x="450" y="433" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">Each player covers a lamp. For the 4th:</text><text x="450" y="449" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">EMP your lamp, run a Denizen onto a lamp to</text><text x="450" y="463" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">make a teleporter, hop through, EMP the next.</text>
+    <rect x="300" y="392" width="300" height="74" rx="9" fill="#10180f" stroke="#34402d" stroke-width="1.5"/><text x="450" y="414" text-anchor="middle" font-family="Oswald" font-weight="600" font-size="13" fill="#d8762e">4-PLAYER METHOD</text><text x="450" y="433" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">One lamp per player — Depot, Diner, Power, Town.</text><text x="450" y="449" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">Get in position, count down on comms,</text><text x="450" y="463" text-anchor="middle" font-family="Barlow Condensed" font-size="12.5" fill="#c9cdc2">and throw all 4 EMPs together.</text>
     <text class="legitem" x="28" y="588" style="fill:#8a948a">No Avogadro kill and no turbines here &#8212; that's the Maxis path. Richtofen = Jet Gun + explosives + EMP the lamps.</text>
   </svg>
   </div>
@@ -355,7 +356,7 @@ const ROUNDS=[
    {t:"<b>Turn the power ON</b> (Avogadro spawns; Richtofen talks to Stuhlinger)",ic:"power",cat:"power",x:712,y:226}]},
  {r:"Round 6",t:"Jugger-Nog — Priority",core:false,note:"Jugg is the #1 buy once power's on — go straight for it before the fog runs. Survivability beats everything else here.",tasks:[
    {t:"Open the burning building's upper door (Town)",ic:"door",cat:"door",x:596,y:452,cost:750,ct:"team"},
-   {t:"<b>Buy Jugger-Nog</b> (all 3 players, top priority)",ic:"perk",cat:"perk",x:626,y:438,cost:2500,ct:"player"},
+   {t:"<b>Buy Jugger-Nog</b> (all 4 players, top priority)",ic:"perk",cat:"perk",x:626,y:438,cost:2500,ct:"player"},
    {t:"Grab the <b>Wires</b> (Jet Gun part 2) on the Power lower catwalk ledge",ic:"part",cat:"pickup",x:660,y:305},
    {t:"<b>Buy Quick Revive</b> — Bus Depot (far end of spawn hallway) · faster revives",ic:"perk",cat:"perk",x:72,y:450,cost:1500,ct:"player"}]},
  {r:"Round 7",t:"Fog — Nacht",core:false,alert:"Fog + Denizens — keep moving, don't stop in the open",note:"Denizens latch on in the fog; melee them off fast or you'll get pulled down.",tasks:[
@@ -379,15 +380,15 @@ const ROUNDS=[
    {t:"<i>Rough budget:</i> a box gun to PaP costs ~<b>950 spin + 5000</b> — keep a buffer if you didn't take the M16",ic:"gun",cat:"gun",x:722,y:452,cost:5950,ct:"player",opt:true}]},
  {r:"Round 12",t:"Mystery Box — Ray Gun & EMP",core:false,note:"Or grab EMPs early from the bank in round 1 if you banked points — lets you finish sooner.",tasks:[
    {t:"Box-spin for the <b>Ray Gun</b> (ordinary, NOT Mark II — counts as explosive)",ic:"gun",cat:"gun",x:242,y:134,cost:950,ct:"player"},
-   {t:"Box-spin for <b>EMP Grenades</b> (enough across the team for 4 lamps)",ic:"emp",cat:"emp",x:242,y:134,cost:950,ct:"player"}]},
+   {t:"Box-spin for <b>EMP Grenades</b> (every player needs a set — one lamp each)",ic:"emp",cat:"emp",x:242,y:134,cost:950,ct:"player"}]},
  {r:"Round 13",t:"Pylon — Heat It",core:true,alert:"Avogadro will harass the steps — EMP it, don't waste the step",note:"Player B (Stuhlinger) must call out each Richtofen voice line so you know a step registered.",tasks:[
    {t:"<b>Make a crawler</b> before starting — keeps the horde off you during the steps"},
    {t:"Watch for the <b>Avogadro</b> (electric zombie) — no Max Ammo on death, EMP it if it crowds you",ic:"emp",cat:"emp",x:242,y:134},
    {t:"Take the Jet Gun under the <b>Pylon</b> and <b>blast until it breaks</b> → Richtofen confirms",ic:"pylon",cat:"pylon",x:518,y:190}]},
  {r:"Round 14",t:"Pylon — Explosive Kills",core:true,tasks:[
    {t:"Get <b>~25 explosive kills under the Pylon</b> (Ray Gun) until Richtofen says power's too high",ic:"pylon",cat:"pylon",x:518,y:190}]},
- {r:"Round 15",t:"Pylon — EMP the Lamps",core:true,note:"All 4 EMPs need to land close together — coordinate on comms before throwing.",tasks:[
-   {t:"<b>EMP all 4 green lamps</b> — Depot, Diner, Town, Power (4th via the Denizen-teleporter trick)",ic:"lamp",cat:"lamp",x:450,y:300,z:1.05},
+ {r:"Round 15",t:"Pylon — EMP the Lamps",core:true,note:"All 4 EMPs need to land close together — one lamp per player, count down on comms before throwing.",tasks:[
+   {t:"<b>EMP all 4 green lamps</b> — Depot, Diner, Town, Power (one player at each lamp, throw together)",ic:"lamp",cat:"lamp",x:450,y:300,z:1.05},
    {t:"☣ <b>Pylon glows blue — achievement unlocks</b>",ic:"pylon",cat:"pylon",x:518,y:190}]},
 ];
 const INCOME=[1000,2000,3200,4500,6000,7500,9000,10500,12000,14000,16000,18000,20000,22000,24000,26000];
