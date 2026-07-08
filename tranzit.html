@@ -371,11 +371,11 @@ const ROUNDS=[
  {r:"Round 9",t:"Town — Jet Gun",core:false,tasks:[
    {t:"Open the Bar door (Jet Gun bench + Stamin-Up inside)",ic:"door",cat:"door",x:656,y:452,cost:750,ct:"team"},
    {t:"Build the <b>Jet Gun</b> at the Bar bench (all 4 parts)",ic:"build",cat:"build",x:688,y:438},
-   {t:"<i>Optional 5th perk:</i> <b>Stamin-Up</b> — Town bar · only via the Tombstone-swap",ic:"perk",cat:"perk",x:700,y:445,cost:2000,ct:"player",opt:true},
-   {t:"<i>Optional 6th perk:</i> <b>Tombstone</b> — Power · co-op only; enables the perk-swap",ic:"perk",cat:"perk",x:741,y:225,cost:2000,ct:"player",opt:true}]},
+   {t:"<i>Optional 5th perk:</i> <b>Stamin-Up</b> — Town bar · only holdable past 4 perks via the Tombstone-swap",ic:"perk",cat:"perk",x:700,y:445,cost:2000,ct:"player",opt:true}]},
  {r:"Round 10",t:"Pack-a-Punch — Open",core:false,note:"The Turbine door only stays open while the Turbine lives — with 4 players, <b>don't race it</b>: two wait at the Town bank with grenades ready, one places the Turbine, one stands guard so zombies don't smash it.",tasks:[
    {t:"<b>Two players position at the Town bank</b> with grenades out, ready on the call",ic:"door",cat:"door",x:722,y:452},
    {t:"Place a <b>Turbine</b> at the door beneath the <b>outhouse behind the Power Station</b> (4th player guards it) — this remotely opens the bank vault's inner door",ic:"power",cat:"power",x:864,y:260,pap:1},
+   {t:"<i>Optional 6th perk:</i> <b>Tombstone</b> — machine is here at Power (opens after power's on) · co-op only; enables the perk-swap",ic:"perk",cat:"perk",x:741,y:225,cost:2000,ct:"player",opt:true},
    {t:"On the call: <b>grenade the two bank vault doors</b>",ic:"door",cat:"door",x:722,y:452,pap:2}]},
  {r:"Round 11",t:"Pack-a-Punch — Build",core:false,tasks:[
    {t:"Build the <b>Pack-a-Punch</b> from the 3 corridor parts (under the bank)",ic:"build",cat:"build",x:722,y:452,pap:3},
@@ -401,7 +401,7 @@ const DIAGRAMS=[
  {id:"ending",title:"Richtofen Ending",cap:"EMP the 4 green lamps",src:"src-ending"},
 ];
 const MASTER=DIAGRAMS[0];
-const STORE_KEY="tranzit_tob_v9";
+const STORE_KEY="tranzit_tob_v10";
 let state={};
 try{state=JSON.parse(localStorage.getItem(STORE_KEY))||{};}catch(e){state={};}
 function fmt(n){return n.toLocaleString();}
